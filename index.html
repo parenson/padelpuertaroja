@@ -379,7 +379,7 @@
       { h: D.venues.courts.maps, t: "Directions", s: D.venues.courts.name, a: "Open in Maps" },
       { h: D.venues.stay.maps, t: "Home base", s: D.venues.stay.name, a: "Open in Maps" }
     ];
-    if (D.event.groupChat) links.push({ h: D.event.groupChat, t: "Group chat", s: "Everyone's in here", a: "Open chat" });
+    if (D.event.groupChat) links.push({ h: D.event.groupChat, t: "Group chat", s: "WhatsApp, everyone is in here", a: "Join or open" });
     if (D.event.playlist) links.push({ h: D.event.playlist, t: "Playlist", s: "Courtside soundtrack", a: "Listen" });
     if (D.event.photoDrop) links.push({ h: D.event.photoDrop, t: "Photo drop", s: "Add yours after each session", a: "Open album" });
     links.forEach(l => { const a = el("a", "", `<strong>${esc(l.t)}</strong><span>${esc(l.s)}</span><em>${esc(l.a)} →</em>`); a.href = l.h; a.target = "_blank"; a.rel = "noopener"; q.appendChild(a); });

@@ -11,7 +11,7 @@ window.PPR = {
     // Cabo San Lucas is on Mountain Standard Time year-round (UTC-7).
     tzOffsetHours: -7,
     kickoff: "2026-10-23 15:00",
-    groupChat: "",          // paste a WhatsApp / iMessage group link here
+    groupChat: "https://chat.whatsapp.com/HcNJbXEYHByGYAvQ0LS2AX", // WhatsApp invite link
     playlist: "",           // paste a Spotify / Apple Music link here
     photoDrop: ""           // paste a shared album link here
   },
