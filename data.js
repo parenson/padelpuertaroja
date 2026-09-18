@@ -30,6 +30,13 @@ window.PPR = {
       line: "Cabo San Lucas, Baja California Sur",
       note: "Home base for the weekend. Meals and evenings here unless noted.",
       maps: "https://www.google.com/maps/search/?api=1&query=Maravilla+Los+Cabos"
+    },
+    clubhouse: {
+      name: "Twin Dolphin Clubhouse",
+      short: "Twin Dolphin",
+      line: "Twin Dolphin Club, Carretera Transpeninsular Km 12.5",
+      note: "Saturday dinner.",
+      maps: "https://www.google.com/maps/search/?api=1&query=Twin+Dolphin+Clubhouse+Los+Cabos"
     }
   },
 
@@ -43,7 +50,7 @@ window.PPR = {
         { start: "15:30", end: "16:30", type: "clinic",     title: "Opening Clinic",           where: "courts", note: "Fundamentals and rhythm for every level. Coaches split by group." },
         { start: "16:30", end: "18:00", type: "match",      title: "Mixer Matches",            where: "courts", note: "Rotating partners, short sets, meet everyone." },
         { start: "18:00", end: "18:45", type: "social",     title: "Sunset Drinks Courtside",  where: "courts", note: "Cold ones as the sun goes down behind the arch." },
-        { start: "19:30", end: "21:30", type: "social",     title: "Welcome Dinner",           where: "stay",   note: "Sample item. Restaurant and dress code to be confirmed." }
+        { start: "19:30", end: "21:30", type: "social",     title: "Welcome Dinner at Ecco",   where: "stay",   note: "Oceanfront at Maravilla. Wood-fired pizzas, Oaxacan tacos, and a seventy-tequila list." }
       ]
     },
     {
@@ -54,7 +61,7 @@ window.PPR = {
         { start: "10:30", end: "16:00", type: "free",       title: "Free Time",                        where: "stay",   note: "Beach, pool, spa, or a siesta. Lunch on your own." },
         { start: "16:00", end: "17:00", type: "showcase",   title: "Pro Showcase",                     where: "courts", note: "Exhibition set from the pros. Bring a chair and a drink." },
         { start: "17:00", end: "18:00", type: "match",      title: "King of the Court",                where: "courts", note: "Winners stay on. Loudest court wins bragging rights." },
-        { start: "19:30", end: "22:00", type: "social",     title: "Saturday Dinner",                  where: "stay",   note: "Sample item. Location to be confirmed." }
+        { start: "19:30", end: "22:00", type: "social",     title: "Dinner at the Twin Dolphin Clubhouse", where: "clubhouse", note: "Back to the club for the night. Bring your round robin excuses." }
       ]
     },
     {
@@ -65,7 +72,8 @@ window.PPR = {
         { start: "10:30", end: "16:00", type: "free",       title: "Free Time",                    where: "stay",   note: "Rest up. Semifinalists announced in the group chat by noon." },
         { start: "16:00", end: "17:15", type: "tournament", title: "Semifinals",                   where: "courts", note: "Two courts, best of three short sets." },
         { start: "17:15", end: "18:00", type: "tournament", title: "The Final",                    where: "courts", note: "Center court. Everyone in the stands." },
-        { start: "18:00", end: "18:30", type: "social",     title: "Awards & Sunset Toast",        where: "courts", note: "Trophies, photos, last light over the Pacific." }
+        { start: "18:00", end: "18:30", type: "social",     title: "Awards & Sunset Toast",        where: "courts", note: "Trophies, photos, last light over the Pacific." },
+        { start: "19:30", end: "21:30", type: "social",     title: "Farewell Dinner at Talay",     where: "stay",   note: "Thai street food on the beach at Maravilla. Last night, make it count." }
       ]
     }
   ],
