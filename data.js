@@ -87,8 +87,8 @@ window.PPR = {
     { name: "Victor",           tag: "", bio: "Padel Master of Power" }
   ],
   players: [
-    { name: "Paul Arenson",   tag: "", bio: "Twin Dolphins Padel Champion. Once broke a man's finger with his overhead." },
-    { name: "Michael Green",  tag: "", bio: "Twin Dolphins padel finalist. Works out before every padel match." },
+    { name: "Paul Arenson",   tag: "", bio: "Twin Dolphins padel champion. Cold plunge enthusiast." },
+    { name: "Michael Green",  tag: "", bio: "Twin Dolphins padel finalist. Gym rat. Grinder." },
     { name: "Jamie Horowitz", tag: "", bio: "Former Amherst basketball star. 3 time Twin Dolphins intermediate Pickleball champion." },
     { name: "Matt Humiston",  tag: "", bio: "Pickleball savant. World Paddle Throwing champion." },
     { name: "Rob Katz",       tag: "", bio: "Twin Dolphins King of the Court winner. Holder of many Twin Dolphins pickleball trophies. OG." },
