@@ -20,9 +20,9 @@ window.PPR = {
     courts: {
       name: "The Courts at Twin Dolphins",
       short: "The Courts",
-      line: "Twin Dolphins, Corridor, Cabo San Lucas",
-      note: "All clinics, matches, showcase, and tournament play.",
-      maps: "https://www.google.com/maps/search/?api=1&query=The+Courts+at+Twin+Dolphins+Cabo+San+Lucas"
+      line: "Carretera Transpeninsular Km 12.5, Bahía Santa María",
+      note: "Six enclosed padel courts inside the Twin Dolphin club. All clinics, matches, showcase, and tournament play.",
+      maps: "https://www.google.com/maps/search/?api=1&query=The+Courts+Twin+Dolphin+Carretera+Transpeninsular+Km+12.5+Los+Cabos"
     },
     stay: {
       name: "Maravilla Los Cabos",
