@@ -81,10 +81,10 @@ window.PPR = {
   // Players and Pros, listed alphabetically by last name. "bio" is the blurb shown under each name.
   // "tag" is an optional label (e.g. "Head Pro") shown only if set. Leave "" for none.
   pros: [
-    { name: "Neil Scantlebury", tag: "", bio: "" },
-    { name: "Eduardo", tag: "", bio: "" },
-    { name: "Gio Carillo", tag: "", bio: "" },
-    { name: "Victor", tag: "", bio: "" }
+    { name: "Neil Scantlebury", tag: "", bio: "Padel Master of Speed" },
+    { name: "Eduardo",          tag: "", bio: "Padel Master of Smooth" },
+    { name: "Gio Carillo",      tag: "", bio: "Padel Master of Control" },
+    { name: "Victor",           tag: "", bio: "Padel Master of Power" }
   ],
   players: [
     { name: "Paul Arenson",   tag: "", bio: "Twin Dolphins Padel Champion. Once broke a man's finger with his overhead." },
