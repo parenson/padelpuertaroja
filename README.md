@@ -19,7 +19,7 @@ No build step, no database. Static files only.
 
 Open `data.js`. Every field is plain text.
 
-- **Players and pros:** add or edit entries in `players` and `pros`. Leave a field as `""` and it simply won't show. To use a photo, put the image in `assets/` and set `photo: "assets/name.jpg"`.
+- **Players and pros:** add or edit entries in `players` and `pros`. Each has `name`, `bio` (the blurb shown under the name), and an optional `tag` label that only shows if set. Leave a field as `""` and it simply won't show.
 - **Schedule:** each day has `items` with `start`, `end` (24h), `type` (`clinic`, `match`, `showcase`, `tournament`, `social`, `free`), `title`, `where` (`courts` or `stay`), and `note`.
 - **Links:** paste the group chat, playlist, or photo album URL into `event`. Empty links are hidden automatically.
 - **Times** are Cabo local time. The app converts them so the countdown and "Happening now" work on any phone anywhere.

@@ -143,39 +143,13 @@
   /* ---------- Players ---------- */
   .group-title { font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
   .group-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-  #player-grid { margin-bottom: 0; } #pro-grid { margin-bottom: 22px; }
-  .pill.pro { background: var(--oro); color: #1B1315; }
-  .pill.host { background: var(--ink); color: var(--ground); }
-  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  @media (min-width: 560px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-  .player {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px;
-    display: grid; gap: 8px; text-align: left; cursor: pointer; transition: transform .15s ease;
-  }
-  .player:active { transform: scale(.985); }
-  .player .avatar {
-    width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
-    font-family: var(--display); font-weight: 700; font-size: 22px; color: #fff; letter-spacing: .04em;
-    background-size: cover; background-position: center; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--line);
-  }
-  .player .avatar.g0 { background-image: linear-gradient(145deg, var(--atardecer), var(--rojo)); }
-  .player .avatar.g1 { background-image: linear-gradient(145deg, var(--azul), #123C7A); }
-  .player .avatar.g2 { background-image: linear-gradient(145deg, var(--oro), var(--rojo-deep)); }
-  .player .avatar.g3 { background-image: linear-gradient(145deg, var(--verde), var(--azul)); }
-  .player h3 { font-size: 17px; font-weight: 600; line-height: 1.2; }
-  .player .from { color: var(--ink-3); font-size: 14px; margin-top: -4px; }
-  .pill { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .04em; padding: 3px 9px; border-radius: 999px; color: #fff; }
-  .pill.beginner { background: var(--pelota); color: #1B1315; }
-  .pill.intermediate { background: var(--azul); }
-  .pill.advanced { background: var(--rojo); }
-  .player .shot { font-size: 14px; color: var(--ink-2); }
-  .player .shot b { font-weight: 600; color: var(--ink); }
-  .player .bio { display: none; font-size: 15px; color: var(--ink-2); border-top: 1px dashed var(--line); padding-top: 8px; margin: 0; }
-  .player.open { grid-column: 1 / -1; }
-  .player.open .bio { display: block; }
-  .player.open { grid-template-columns: 64px 1fr; column-gap: 14px; }
-  .player.open .avatar { grid-row: span 3; }
-  .player.open .bio { grid-column: 1 / -1; }
+  .roster { display: grid; gap: 10px; margin-bottom: 26px; }
+  .person { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 4px; }
+  .person .who { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .person h3 { font-size: 18px; font-weight: 700; line-height: 1.25; }
+  .person .from { color: var(--ink-3); font-size: 14px; }
+  .person .bio { margin: 0; color: var(--ink-2); font-size: 16px; }
+  .pill { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: var(--oro); color: #1B1315; }
 
   /* ---------- Schedule ---------- */
   .seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: var(--surface-2); padding: 4px; border-radius: 12px; margin-bottom: 18px; }
@@ -295,9 +269,9 @@
       <p id="player-count"></p>
     </div>
     <h3 class="group-title">The Pros</h3>
-    <div class="grid" id="pro-grid"></div>
+    <div class="roster" id="pro-grid"></div>
     <h3 class="group-title">The Players</h3>
-    <div class="grid" id="player-grid"></div>
+    <div class="roster" id="player-grid"></div>
   </section>
 
   <!-- SCHEDULE -->
@@ -412,31 +386,19 @@
   }
 
   // ---- players ----
-  function personCard(p, i, kind) {
-    const initials = p.name.split(/\s+/).map(w => w[0]).slice(0, 2).join("");
-    const c = el("div", "player");
-    c.setAttribute("role", "button"); c.tabIndex = 0; c.setAttribute("aria-expanded", "false");
-    const pills = [];
-    if (kind === "pro") pills.push(`<span class="pill pro">${esc(p.title || "Pro")}</span>`);
-    if (p.organizer) pills.push(`<span class="pill host">Host</span>`);
-    if (p.level) pills.push(`<span class="pill ${esc(p.level.toLowerCase())}">${esc(p.level)}</span>`);
+  function personRow(p, kind) {
+    const c = el("div", "person");
     c.innerHTML = `
-      <div class="avatar g${i % 4}" ${p.photo ? `style="background-image:url('${esc(p.photo)}')"` : ""}>${p.photo ? "" : esc(initials)}</div>
-      <h3>${esc(p.name)}</h3>
+      <div class="who"><h3>${esc(p.name)}</h3>${p.tag ? `<span class="pill">${esc(p.tag)}</span>` : ""}</div>
       ${p.from ? `<div class="from">${esc(p.from)}</div>` : ""}
-      ${pills.length ? `<div class="pills">${pills.join(" ")}</div>` : ""}
-      ${p.shot ? `<div class="shot">Signature shot: <b>${esc(p.shot)}</b></div>` : ""}
       ${p.bio ? `<p class="bio">${esc(p.bio)}</p>` : ""}`;
-    const toggle = () => { const open = c.classList.toggle("open"); c.setAttribute("aria-expanded", open); };
-    c.addEventListener("click", toggle);
-    c.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
     return c;
   }
   function buildPlayers() {
     const pros = D.pros || [], players = D.players || [];
     $("#player-count").textContent = `${players.length} players · ${pros.length} pros`;
-    pros.forEach((p, i) => $("#pro-grid").appendChild(personCard(p, i + 2, "pro")));
-    players.forEach((p, i) => $("#player-grid").appendChild(personCard(p, i, "player")));
+    pros.forEach(p => $("#pro-grid").appendChild(personRow(p, "pro")));
+    players.forEach(p => $("#player-grid").appendChild(personRow(p, "player")));
   }
 
   // ---- schedule ----

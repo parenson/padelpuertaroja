@@ -78,26 +78,25 @@ window.PPR = {
     }
   ],
 
-  // Players and Pros — photo is optional (leave blank to use initials).
-  // from / level / shot / bio are placeholders until real bios arrive.
-  // Leave any field as "" and it simply won't show.
+  // Players and Pros. "bio" is the blurb shown under each name.
+  // "tag" is an optional label (e.g. "Head Pro") shown only if set. Leave "" for none.
   pros: [
-    { name: "Neil Scantlebury", from: "", title: "Head Pro",  shot: "", photo: "", bio: "" },
-    { name: "Eduardo",          from: "", title: "Pro",       shot: "", photo: "", bio: "" },
-    { name: "Gio Carillo",      from: "", title: "Pro",       shot: "", photo: "", bio: "" },
-    { name: "Victor",           from: "", title: "Pro",       shot: "", photo: "", bio: "" }
+    { name: "Neil Scantlebury", tag: "", bio: "" },
+    { name: "Eduardo", tag: "", bio: "" },
+    { name: "Gio Carillo", tag: "", bio: "" },
+    { name: "Victor", tag: "", bio: "" }
   ],
   players: [
-    { name: "Paul Arenson",    from: "", level: "", shot: "", photo: "", bio: "", organizer: true },
-    { name: "Michael Green",   from: "", level: "", shot: "", photo: "", bio: "" },
-    { name: "Jamie Horowitz",  from: "", level: "", shot: "", photo: "", bio: "" },
-    { name: "Brett Thomas",    from: "", level: "", shot: "", photo: "", bio: "" },
-    { name: "James Pade",      from: "", level: "", shot: "", photo: "", bio: "" },
-    { name: "Rob Katz",        from: "", level: "", shot: "", photo: "", bio: "" },
-    { name: "Brad Stephens",   from: "", level: "", shot: "", photo: "", bio: "" },
-    { name: "Matt Stroyman",   from: "", level: "", shot: "", photo: "", bio: "" },
-    { name: "Matt Humiston",   from: "", level: "", shot: "", photo: "", bio: "" },
-    { name: "Ian Schapiro",    from: "", level: "", shot: "", photo: "", bio: "" }
+    { name: "Paul Arenson", tag: "", bio: "" },
+    { name: "Michael Green", tag: "", bio: "" },
+    { name: "Jamie Horowitz", tag: "", bio: "" },
+    { name: "Brett Thomas", tag: "", bio: "" },
+    { name: "James Pade", tag: "", bio: "" },
+    { name: "Rob Katz", tag: "", bio: "" },
+    { name: "Brad Stephens", tag: "", bio: "" },
+    { name: "Matt Stroyman", tag: "", bio: "" },
+    { name: "Matt Humiston", tag: "", bio: "" },
+    { name: "Ian Schapiro", tag: "", bio: "" }
   ],
 
   essentials: [
