@@ -1,6 +1,7 @@
 # Padel Puerta Roja — weekend portal
 
 A phone-first web app for the Padel Puerta Roja weekend, Cabo San Lucas, October 23–25, 2026.
+Live at https://padelpuertaroja.netlify.app (deploys automatically from the main branch).
 No build step, no database. Static files only.
 
 ## Files
