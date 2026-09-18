@@ -92,7 +92,7 @@ window.PPR = {
     { name: "Jamie Horowitz", tag: "", bio: "Former Amherst basketball star. 3 time Twin Dolphins intermediate Pickleball champion." },
     { name: "Matt Humiston",  tag: "", bio: "Pickleball savant. World Paddle Throwing champion." },
     { name: "Rob Katz",       tag: "", bio: "Twin Dolphins King of the Court winner. Holder of many Twin Dolphins pickleball trophies. OG." },
-    { name: "James Pade",     tag: "", bio: "Former Stanford tennis star. Winner of every racket event ever held at Twin Dolphins." },
+    { name: "James Pade",     tag: "", bio: "Former Stanford tennis star. ATP Tour player. Winner of every racket event ever held at Twin Dolphins." },
     { name: "Ian Schapiro",   tag: "", bio: "Best padel player at Cove Club. Twin Dolphin padel finalist. Liveball master." },
     { name: "Brad Stephens",  tag: "", bio: "Owner of several Twin Dolphins padel championships. Best forehand slice in the business." },
     { name: "Matt Stroyman",  tag: "", bio: "Former Cal tennis star. ATP Tour player. Padel wizard." },
