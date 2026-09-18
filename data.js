@@ -78,7 +78,7 @@ window.PPR = {
     }
   ],
 
-  // Players and Pros. "bio" is the blurb shown under each name.
+  // Players and Pros, listed alphabetically by last name. "bio" is the blurb shown under each name.
   // "tag" is an optional label (e.g. "Head Pro") shown only if set. Leave "" for none.
   pros: [
     { name: "Neil Scantlebury", tag: "", bio: "" },
@@ -87,16 +87,16 @@ window.PPR = {
     { name: "Victor", tag: "", bio: "" }
   ],
   players: [
-    { name: "Paul Arenson", tag: "", bio: "" },
-    { name: "Michael Green", tag: "", bio: "" },
-    { name: "Jamie Horowitz", tag: "", bio: "" },
-    { name: "Brett Thomas", tag: "", bio: "" },
-    { name: "James Pade", tag: "", bio: "" },
-    { name: "Rob Katz", tag: "", bio: "" },
-    { name: "Brad Stephens", tag: "", bio: "" },
-    { name: "Matt Stroyman", tag: "", bio: "" },
-    { name: "Matt Humiston", tag: "", bio: "" },
-    { name: "Ian Schapiro", tag: "", bio: "" }
+    { name: "Paul Arenson",   tag: "", bio: "Twin Dolphins Padel Champion. Once broke a man's finger with his overhead." },
+    { name: "Michael Green",  tag: "", bio: "Twin Dolphins padel finalist. Works out before every padel match." },
+    { name: "Jamie Horowitz", tag: "", bio: "Former Amherst basketball star. 3 time Twin Dolphins intermediate Pickleball champion." },
+    { name: "Matt Humiston",  tag: "", bio: "Pickleball savant. World Paddle Throwing champion." },
+    { name: "Rob Katz",       tag: "", bio: "Twin Dolphins King of the Court winner. Holder of many Twin Dolphins pickleball trophies. OG." },
+    { name: "James Pade",     tag: "", bio: "Former Stanford tennis star. Winner of every racket event ever held at Twin Dolphins." },
+    { name: "Ian Schapiro",   tag: "", bio: "Best padel player at Cove Club. Twin Dolphin padel finalist. Liveball master." },
+    { name: "Brad Stephens",  tag: "", bio: "Owner of several Twin Dolphins padel championships. Best forehand slice in the business." },
+    { name: "Matt Stroyman",  tag: "", bio: "Former Cal tennis star. ATP Tour player. Padel wizard." },
+    { name: "Brett Thomas",   tag: "", bio: "Former Boston College tennis star. Loves ripping forehands at mach 3 speeds." }
   ],
 
   essentials: [
