@@ -105,7 +105,7 @@ window.PPR = {
   ],
 
   contacts: [
-    { name: "Paul Arenson", role: "Organizer", phone: "" },
-    { name: "Maravilla Concierge", role: "Hotel", phone: "+52 624 000 0000" }
+    { name: "Paul Arenson",  role: "Organizer", phone: "+1 (310) 702-1190" },
+    { name: "Michael Green", role: "Organizer", phone: "+1 (310) 666-6773" }
   ]
 };
