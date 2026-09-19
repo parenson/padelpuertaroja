@@ -1,6 +1,6 @@
-# Padel Puerta Roja — weekend portal
+# La Víbora Invitational — weekend portal
 
-A phone-first web app for the Padel Puerta Roja weekend, Cabo San Lucas, October 23–25, 2026.
+A phone-first web app for the La Víbora Invitational padel weekend (originally named Padel Puerta Roja), Cabo San Lucas, October 23–25, 2026.
 Live at https://padelpuertaroja.netlify.app (deploys automatically from the main branch).
 No build step, no database. Static files only.
 
@@ -11,7 +11,7 @@ No build step, no database. Static files only.
 | `index.html` | The whole app: design, layout, and behavior. You should rarely need to touch it. |
 | `data.js` | **All the content.** Players, pros, schedule, venues, essentials, contacts, links. Edit this. |
 | `manifest.webmanifest` | Makes "Add to Home Screen" install it like an app with the logo as the icon. |
-| `assets/` | Optimized logo, header mark, and app icons generated from `PadelPuertaRoja3.png`. |
+| `assets/` | Arch artwork (`arch.png`), header mark, and app icons, cut from the original `PadelPuertaRoja3.png` logo. |
 | `build-artifact.py` | Bundles everything into `dist/puerta-roja.html`, a single file for the shareable preview link. |
 | `.claude/launch.json` | Local preview server config. |
 

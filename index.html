@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Padel Puerta Roja</title>
-<meta name="description" content="Padel Puerta Roja · Cabo San Lucas · October 23–25, 2026. Players, schedule, and everything you need for the weekend.">
+<title>La Víbora Invitational</title>
+<meta name="description" content="La Víbora Invitational · Cabo San Lucas · October 23–25, 2026. Players, schedule, and everything you need for the weekend.">
 <meta name="theme-color" content="#B3141C">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Puerta Roja">
+<meta name="apple-mobile-web-app-title" content="La Víbora">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -102,10 +102,14 @@
 
   /* ---------- Home ---------- */
   .hero { display: grid; justify-items: center; gap: 18px; text-align: center; }
-  .plaque { background: var(--plaque); border-radius: 18px; padding: 14px 18px 8px; max-width: 320px; width: 100%; }
-  :root[data-theme="dark"] .plaque { box-shadow: var(--shadow); }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .plaque { box-shadow: var(--shadow); } }
-  .plaque img { width: 100%; }
+  .lockup { display: grid; justify-items: center; width: 100%; }
+  .lockup img { width: 190px; height: auto; margin-bottom: 4px; }
+  .lockup h1 { font-family: var(--display); font-weight: 600; line-height: .98; display: grid; }
+  .lockup h1 span { font-size: clamp(44px, 14vw, 60px); letter-spacing: .02em; color: var(--ink); text-transform: uppercase; }
+  .lockup h1 b { font-size: clamp(27px, 8.4vw, 36px); letter-spacing: .06em; color: var(--rojo); font-weight: 700; text-transform: uppercase; }
+  .lockup .place { display: flex; align-items: center; gap: 12px; margin-top: 10px; color: var(--oro); font-weight: 600; font-size: 14px; letter-spacing: .32em; text-transform: uppercase; }
+  .lockup .place::before, .lockup .place::after { content: ""; width: 44px; height: 1.5px; background: var(--oro); }
+  .lockup .dates { font-family: Georgia, "Times New Roman", serif; font-size: 20px; margin-top: 4px; color: var(--ink); }
 
   .arch {
     width: 100%; max-width: 420px; background: var(--rojo); color: #fff;
@@ -228,7 +232,7 @@
 <header class="top">
   <div class="top-in">
     <img src="assets/mark.png" alt="">
-    <div class="wordmark">PADEL <b>PUERTA ROJA</b><small>Cabo San Lucas · Oct 23–25, 2026</small></div>
+    <div class="wordmark">LA VÍBORA <b>INVITATIONAL</b><small>Cabo San Lucas · Oct 23–25, 2026</small></div>
     <nav class="tabs" aria-label="Sections">
       <a href="#home">Home</a><a href="#players">Players</a><a href="#schedule">Schedule</a><a href="#info">Info</a>
     </nav>
@@ -239,10 +243,15 @@
   <!-- HOME -->
   <section class="screen" id="home" aria-label="Home">
     <div class="hero">
-      <div class="plaque"><img src="assets/logo.png" alt="Padel Puerta Roja, Cabo San Lucas, October 23–25, 2026"></div>
+      <div class="lockup">
+        <img src="assets/arch.png" alt="" width="466" height="756">
+        <h1><span>La Víbora</span><b>Invitational</b></h1>
+        <div class="place">Cabo San Lucas</div>
+        <div class="dates">October 23 – 25, 2026</div>
+      </div>
 
       <div class="arch" id="arch">
-        <div class="eyebrow" id="arch-eyebrow">The door opens in</div>
+        <div class="eyebrow" id="arch-eyebrow">First serve in</div>
         <div class="count" id="count">
           <div><b id="c-d">–</b><span>days</span></div>
           <div><b id="c-h">–</b><span>hours</span></div>
@@ -296,7 +305,7 @@
     <div class="stack" id="info-stack"></div>
   </section>
 
-  <footer>Padel Puerta Roja · Cabo San Lucas · 2026</footer>
+  <footer>La Víbora Invitational · Cabo San Lucas · 2026</footer>
 </main>
 
 <nav class="tabbar" aria-label="Sections">
@@ -346,7 +355,7 @@
     if (now < kickoff) {
       const diff = kickoff - now, d = Math.floor(diff / 864e5), h = Math.floor(diff / 36e5) % 24, m = Math.floor(diff / 6e4) % 60;
       $("#c-d").textContent = d; $("#c-h").textContent = h; $("#c-m").textContent = m;
-      cd.hidden = false; msg.hidden = true; eyebrow.textContent = "The door opens in";
+      cd.hidden = false; msg.hidden = true; eyebrow.textContent = "First serve in";
     } else if (now < lastEnd) {
       const dayIdx = D.schedule.findIndex(day => { const start = toUTC(day.date, "00:00"); return now >= start && now < start + 864e5; });
       cd.hidden = true; msg.hidden = false; eyebrow.textContent = "Bienvenidos";
@@ -354,7 +363,7 @@
       sub.textContent = "Sunscreen, water, and see you at The Courts.";
     } else {
       cd.hidden = true; msg.hidden = false; eyebrow.textContent = "That's a wrap";
-      msg.textContent = "Hasta la próxima"; sub.textContent = "Thank you for coming through the red door.";
+      msg.textContent = "Hasta la próxima"; sub.textContent = "Thanks for playing La Víbora. See you next year.";
     }
     // next / now
     const live = allItems.find(i => now >= i.s && now < i.e);
