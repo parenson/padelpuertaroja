@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Graduate&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
 <style>
   :root {
     --rojo: #B3141C;
@@ -36,11 +36,9 @@
     --shadow: 0 1px 2px rgba(60, 30, 20, .06), 0 8px 24px -12px rgba(60, 30, 20, .18);
     --accent-ink: #FFFFFF;
 
-    --serape: linear-gradient(90deg,
-      var(--rojo) 0 22%, var(--oro) 22% 38%, var(--verde) 38% 50%,
-      var(--azul) 50% 66%, var(--pelota) 66% 78%, var(--atardecer) 78% 100%);
+    --poster: #140E0D;
 
-    --display: "Cinzel", "Trajan Pro", Georgia, serif;
+    --display: "Graduate", "Rockwell", "Roboto Slab", Georgia, serif;
     --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
     --tab-h: 64px;
   }
@@ -71,7 +69,14 @@
   button { font: inherit; color: inherit; }
   :focus-visible { outline: 2px solid var(--azul); outline-offset: 2px; }
 
-  .serape { height: 6px; background: var(--serape); }
+  .scales {
+    height: 10px; background-color: #B3141C;
+    background-image:
+      linear-gradient(135deg, #6E0A10 25%, transparent 25%), linear-gradient(225deg, #6E0A10 25%, transparent 25%),
+      linear-gradient(45deg, #6E0A10 25%, transparent 25%), linear-gradient(315deg, #6E0A10 25%, transparent 25%);
+    background-position: 5px 0, 5px 0, 0 0, 0 0; background-size: 10px 10px; background-repeat: repeat;
+    border-bottom: 2px solid #C4952E;
+  }
 
   /* ---------- Header ---------- */
   .top {
@@ -82,9 +87,9 @@
     max-width: 720px; margin: 0 auto; padding: 10px 16px;
     display: flex; align-items: center; gap: 12px;
   }
-  .top-in img { width: 30px; height: 43px; }
-  .wordmark { font-family: var(--display); font-weight: 700; letter-spacing: .06em; font-size: 15px; line-height: 1.1; }
-  .wordmark b { color: var(--rojo); font-weight: 700; }
+  .top-in img { width: 40px; height: 41px; }
+  .wordmark { font-family: var(--display); font-weight: 400; letter-spacing: .04em; font-size: 14px; line-height: 1.15; }
+  .wordmark b { color: var(--rojo); font-weight: 400; }
   .wordmark small { display: block; font-family: var(--body); font-weight: 600; color: var(--ink-3); letter-spacing: .14em; font-size: 10px; text-transform: uppercase; margin-top: 3px; }
 
   nav.tabs { display: none; margin-left: auto; gap: 4px; }
@@ -95,21 +100,20 @@
   main { max-width: 720px; margin: 0 auto; padding: 20px 16px calc(var(--tab-h) + 28px + env(safe-area-inset-bottom, 0px)); }
   section.screen[hidden] { display: none; }
   h1, h2, h3 { text-wrap: balance; margin: 0; }
-  h2.screen-title { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: .05em; color: var(--rojo); }
+  h2.screen-title { font-family: var(--display); font-weight: 400; font-size: 21px; letter-spacing: .04em; color: var(--rojo); text-transform: uppercase; }
   .screen-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
   .screen-head p { margin: 0; color: var(--ink-3); font-size: 15px; }
   .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
 
   /* ---------- Home ---------- */
   .hero { display: grid; justify-items: center; gap: 18px; text-align: center; }
-  .lockup { display: grid; justify-items: center; width: 100%; }
-  .lockup img { width: 190px; height: auto; margin-bottom: 4px; }
-  .lockup h1 { font-family: var(--display); font-weight: 600; line-height: .98; display: grid; }
-  .lockup h1 span { font-size: clamp(44px, 14vw, 60px); letter-spacing: .02em; color: var(--ink); text-transform: uppercase; }
-  .lockup h1 b { font-size: clamp(27px, 8.4vw, 36px); letter-spacing: .06em; color: var(--rojo); font-weight: 700; text-transform: uppercase; }
-  .lockup .place { display: flex; align-items: center; gap: 12px; margin-top: 10px; color: var(--oro); font-weight: 600; font-size: 14px; letter-spacing: .32em; text-transform: uppercase; }
-  .lockup .place::before, .lockup .place::after { content: ""; width: 44px; height: 1.5px; background: var(--oro); }
-  .lockup .dates { font-family: Georgia, "Times New Roman", serif; font-size: 20px; margin-top: 4px; color: var(--ink); }
+  .poster {
+    width: 100%; border-radius: 22px; padding: 22px 16px 18px; display: grid; justify-items: center;
+    background: radial-gradient(120% 90% at 50% 38%, #4A0B10 0%, #23100F 48%, var(--poster) 100%);
+    border: 1px solid #3A2220; box-shadow: var(--shadow);
+  }
+  .poster img { width: min(100%, 340px); height: auto; filter: drop-shadow(0 10px 24px rgba(0,0,0,.55)); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   .arch {
     width: 100%; max-width: 420px; background: var(--rojo); color: #fff;
@@ -123,7 +127,7 @@
   .arch .eyebrow { color: rgba(255,255,255,.8); }
   .count { display: flex; justify-content: center; gap: 22px; margin-top: 12px; font-variant-numeric: tabular-nums; }
   .count div { display: grid; gap: 2px; }
-  .count b { font-family: var(--display); font-size: 40px; font-weight: 600; line-height: 1; }
+  .count b { font-family: var(--display); font-size: 40px; font-weight: 400; line-height: 1; }
   .count span { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; opacity: .85; }
   .arch .msg { font-family: var(--display); font-size: 20px; letter-spacing: .04em; margin-top: 8px; }
   .arch .sub { margin: 10px 0 0; font-size: 15px; opacity: .9; }
@@ -158,7 +162,7 @@
   /* ---------- Schedule ---------- */
   .seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: var(--surface-2); padding: 4px; border-radius: 12px; margin-bottom: 18px; }
   .seg button { border: 0; background: transparent; border-radius: 9px; padding: 8px 4px; display: grid; gap: 1px; cursor: pointer; color: var(--ink-2); }
-  .seg button b { font-family: var(--display); font-size: 15px; letter-spacing: .04em; font-weight: 700; }
+  .seg button b { font-family: var(--display); font-size: 14px; letter-spacing: .03em; font-weight: 400; text-transform: uppercase; }
   .seg button span { font-size: 12px; }
   .seg button[aria-selected="true"] { background: var(--surface); color: var(--rojo); box-shadow: var(--shadow); }
 
@@ -191,7 +195,7 @@
   /* ---------- Info ---------- */
   .stack { display: grid; gap: 12px; }
   .venue { display: grid; gap: 4px; }
-  .venue h3 { font-family: var(--display); font-size: 17px; letter-spacing: .03em; font-weight: 700; }
+  .venue h3 { font-family: var(--display); font-size: 16px; letter-spacing: .02em; font-weight: 400; text-transform: uppercase; }
   .venue .line { color: var(--ink-2); }
   .venue .note { color: var(--ink-3); font-size: 15px; margin: 0; }
   .btn { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; background: var(--rojo); color: #fff; font-weight: 600; padding: 9px 14px; border-radius: 10px; font-size: 15px; margin-top: 6px; justify-self: start; }
@@ -228,7 +232,7 @@
 </style>
 </head>
 <body>
-<div class="serape"></div>
+<div class="scales"></div>
 <header class="top">
   <div class="top-in">
     <img src="assets/mark.png" alt="">
@@ -243,11 +247,9 @@
   <!-- HOME -->
   <section class="screen" id="home" aria-label="Home">
     <div class="hero">
-      <div class="lockup">
-        <img src="assets/arch.png" alt="" width="466" height="756">
-        <h1><span>La Víbora</span><b>Invitational</b></h1>
-        <div class="place">Cabo San Lucas</div>
-        <div class="dates">October 23 – 25, 2026</div>
+      <div class="poster">
+        <h1 class="sr-only">La Víbora Invitational, Cabo San Lucas, October 23–25, 2026</h1>
+        <img src="assets/logo.webp" alt="La Víbora Invitational logo: a red viper coiled around a padel racket and ball over a Cabo beach" width="974" height="1000">
       </div>
 
       <div class="arch" id="arch">
