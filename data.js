@@ -88,7 +88,7 @@ window.PPR = {
   ],
   players: [
     { name: "Paul Arenson",   tag: "", bio: "Twin Dolphins padel champion. Cold plunge enthusiast." },
-    { name: "Michael Green",  tag: "", bio: "Twin Dolphins padel finalist. Gym rat. Grinder." },
+    { name: "Michael Green",  tag: "", bio: "Twin Dolphins padel finalist. Gym rat. Bicoastal padel ambassador." },
     { name: "Jason Harrow",   tag: "", bio: "Former Princeton squash star. Padel maestro off the glass." },
     { name: "Jamie Horowitz", tag: "", bio: "Former Amherst basketball star. 3 time Twin Dolphins intermediate Pickleball champion." },
     { name: "Matt Humiston",  tag: "", bio: "Pickleball savant. World Paddle Throwing champion." },

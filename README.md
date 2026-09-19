@@ -11,7 +11,7 @@ No build step, no database. Static files only.
 | `index.html` | The whole app: design, layout, and behavior. You should rarely need to touch it. |
 | `data.js` | **All the content.** Players, pros, schedule, venues, essentials, contacts, links. Edit this. |
 | `manifest.webmanifest` | Makes "Add to Home Screen" install it like an app with the logo as the icon. |
-| `assets/` | `NewLogo.png` is the source logo. `logo.webp`, `mark.png`, and the icons are cut-out, resized versions generated from it. |
+| `assets/` | `NewLogo.png` is the source logo. `logo.webp`, `badge.png`, and the icons are cut-out, resized versions generated from it. |
 | `build-artifact.py` | Bundles everything into `dist/puerta-roja.html`, a single file for the shareable preview link. |
 | `.claude/launch.json` | Local preview server config. |
 
