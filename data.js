@@ -71,7 +71,7 @@ window.PPR = {
       date: "2026-10-24", label: "Saturday", sub: "Oct 24 · Play Day",
       items: [
         { start: "08:00", end: "09:00", type: "clinic",     title: "Morning Clinic: Game Essentials", where: "courts", note: "Serves, returns, vibora, bandeja, wall strategy, team work." },
-        { start: "09:00", end: "10:30", type: "match",      title: "King of the Court",              where: "courts", note: "Winners stay on. Loudest court wins bragging rights." },
+        { start: "09:00", end: "10:30", type: "match",      title: "King of the Court",              where: "courts", note: "Let's separate the men from the boys." },
         { start: "10:30", end: "15:00", type: "free",       title: "Free Time",                        where: "stay",   note: "Beach, pool, spa, or a siesta. Lunch on your own." },
         { start: "15:00", end: "16:00", type: "showcase",   title: "Pro Showcase",                     where: "courts", note: "Exhibition from the pros. See how padel is supposed to be played." },
         { start: "16:00", end: "18:30", type: "match",      title: "Round Robin Matches",                where: "courts", note: "Everyone plays. Results seed Sunday's tournament." },
