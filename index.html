@@ -361,7 +361,7 @@
     if (target) {
       ne.textContent = live ? "Happening now" : (now < kickoff ? "First up" : "Up next");
       $("#next-title").textContent = target.title;
-      $("#next-meta").textContent = `${target.day.label} · ${fmt(target.start)}–${fmt(target.end)} · ${venueName(target.where)}`;
+      $("#next-meta").textContent = [target.day.label, `${fmt(target.start)}–${fmt(target.end)}`, venueName(target.where)].filter(Boolean).join(" · ");
     } else {
       ne.textContent = "Final whistle"; $("#next-title").textContent = "See you next year";
       $("#next-meta").textContent = "";
