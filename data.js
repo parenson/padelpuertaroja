@@ -60,7 +60,7 @@ window.PPR = {
     {
       date: "2026-10-23", label: "Friday", sub: "Oct 23 · Arrival",
       items: [
-        { start: "12:30", end: "14:00", type: "social",     title: "Beach Club Lunch",         where: "beach",  note: "Maravilla Beach Club, for all who are around the club." },
+        { start: "12:30", end: "14:00", type: "social",     title: "Santa Maria Beach Club Lunch",         where: "beach",  note: "Maravilla Beach Club, for all who are around the club." },
         { start: "15:00", end: "15:30", type: "social",     title: "Warm Up at The Courts",    where: "courts", note: "Check in, grab a racket, hit a few balls." },
         { start: "15:30", end: "16:30", type: "clinic",     title: "Work with the Pros",           where: "courts", note: "Kick off the weekend with some work on the fundamentals." },
         { start: "16:30", end: "18:00", type: "match",      title: "Day 1 Matches",            where: "courts", note: "Rotating partners, short sets, constant action." },
