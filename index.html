@@ -214,6 +214,15 @@
   .menu .diet { font-size: 11px; font-weight: 600; letter-spacing: .06em; color: var(--oro); vertical-align: 1px; }
   .menu .desc { color: var(--ink-2); font-size: 14px; }
   .menu .key { margin: 12px 0 0; font-size: 12px; color: var(--ink-3); }
+  .wx {
+    display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: center;
+    background: var(--surface-2); border-radius: 14px; padding: 12px 14px; margin-bottom: 2px;
+  }
+  .wx .ico { font-size: 34px; line-height: 1; grid-row: span 2; }
+  .wx .cond { font-weight: 600; font-size: 16px; }
+  .wx .cond b { font-variant-numeric: tabular-nums; }
+  .wx .cond small { font-weight: 400; color: var(--ink-3); font-size: 14px; }
+  .wx .det { color: var(--ink-2); font-size: 14px; font-variant-numeric: tabular-nums; display: flex; flex-wrap: wrap; gap: 4px 12px; }
   .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 16px; color: var(--ink-3); }
 
   /* ---------- Info ---------- */
@@ -441,10 +450,43 @@
       `<div class="dish"><b>${esc(x.dish)}</b>${x.tags ? ` <span class="diet">${esc(x.tags)}</span>` : ""}${x.desc ? `<span class="desc">${esc(x.desc)}</span>` : ""}</div>`).join("")}</div>`;
     return `<details class="menu"><summary>See the menu${m.title ? ` · ${esc(m.title)}` : ""}</summary>${m.courses.map(course).join("")}<p class="key">GF gluten free · DF dairy free · V vegan</p></details>`;
   }
+  // ---- weather (open-meteo.com, free, no key) ----
+  const WX = {};
+  const WX_CODES = [
+    [[0], "☀️", "Sunny"], [[1], "🌤️", "Mostly sunny"], [[2], "⛅", "Partly cloudy"], [[3], "☁️", "Cloudy"],
+    [[45, 48], "🌫️", "Foggy"], [[51, 53, 55, 56, 57], "🌦️", "Light drizzle"], [[61, 63, 65, 66, 67], "🌧️", "Rain"],
+    [[80, 81, 82], "🌦️", "Showers"], [[95, 96, 99], "⛈️", "Thunderstorms"]
+  ];
+  function wxLook(code) { const m = WX_CODES.find(([codes]) => codes.includes(code)); return m ? { ico: m[1], text: m[2] } : { ico: "🌤️", text: "Mixed" }; }
+  async function loadWeather() {
+    const w = D.event.weather; if (!w || !D.schedule.length) return;
+    const first = D.schedule[0].date, last = D.schedule[D.schedule.length - 1].date;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${w.lat}&longitude=${w.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FMazatlan&start_date=${first}&end_date=${last}`;
+    try {
+      const r = await fetch(url); if (!r.ok) return;
+      const j = await r.json(); const dd = j.daily || {};
+      (dd.time || []).forEach((date, i) => {
+        if (dd.temperature_2m_max[i] == null) return;
+        WX[date] = { code: dd.weather_code[i], hi: Math.round(dd.temperature_2m_max[i]), lo: Math.round(dd.temperature_2m_min[i]),
+          rain: dd.precipitation_probability_max[i], wind: Math.round(dd.wind_speed_10m_max[i]), sunset: (dd.sunset[i] || "").slice(11) };
+      });
+      renderDay();
+    } catch (e) { /* no forecast available: the strip simply doesn't show */ }
+  }
+  function weatherCard(x) {
+    const k = wxLook(x.code);
+    const c = el("div", "wx");
+    c.innerHTML = `<div class="ico" aria-hidden="true">${k.ico}</div>
+      <div class="cond">${esc(k.text)} · <b>${x.hi}°</b> <small>/ ${x.lo}°</small></div>
+      <div class="det"><span>Rain ${x.rain}%</span><span>Wind ${x.wind} mph</span>${x.sunset ? `<span>Sunset ${fmt(x.sunset)}</span>` : ""}</div>`;
+    return c;
+  }
+
   function renderDay() {
     const now = Date.now();
     document.querySelectorAll("#seg button").forEach((b, i) => b.setAttribute("aria-selected", i === dayIdx));
     const day = D.schedule[dayIdx], wrap = $("#day"); wrap.innerHTML = "";
+    if (WX[day.date]) wrap.appendChild(weatherCard(WX[day.date]));
     day.items.forEach(it => {
       const s = toUTC(day.date, it.start), e = toUTC(day.date, it.end);
       const isNow = now >= s && now < e, past = now >= e;
@@ -483,7 +525,7 @@
     st.appendChild(hs);
   }
 
-  buildQuick(); buildPlayers(); buildSeg(); renderDay(); buildInfo(); tickHome(); route();
+  buildQuick(); buildPlayers(); buildSeg(); renderDay(); buildInfo(); tickHome(); route(); loadWeather();
   requestAnimationFrame(() => window.scrollTo(0, 0));
   setInterval(() => { tickHome(); if (!$("#schedule").hidden) renderDay(); }, 30000);
 })();

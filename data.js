@@ -11,6 +11,8 @@ window.PPR = {
     // Cabo San Lucas is on Mountain Standard Time year-round (UTC-7).
     tzOffsetHours: -7,
     kickoff: "2026-10-23 15:00",
+    // Forecast location (The Courts at Twin Dolphin). Forecasts come from open-meteo.com, no key needed.
+    weather: { lat: 22.94, lon: -109.79 },
     groupChat: "https://chat.whatsapp.com/Gi7LBK72GoK1V1g0JxVqwg", // WhatsApp invite link
     playlist: "",           // paste a Spotify / Apple Music link here
     photoDrop: ""           // paste a shared album link here
