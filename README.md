@@ -20,7 +20,7 @@ No build step, no database. Static files only.
 Open `data.js`. Every field is plain text.
 
 - **Players and pros:** add or edit entries in `players` and `pros`. Each has `name`, `bio` (the blurb shown under the name), and an optional `tag` label that only shows if set. Leave a field as `""` and it simply won't show.
-- **Schedule:** each day has `items` with `start`, `end` (24h), `type` (`clinic`, `match`, `showcase`, `tournament`, `social`, `free`), `title`, `where` (a key from `venues`, such as `courts`, `stay`, `beach`, `montage`, or `""` for no location), and `note`.
+- **Schedule:** each day has `items` with `start`, `end` (24h), `type` (`clinic`, `match`, `showcase`, `tournament`, `social`, `free`), `title`, `where` (a key from `venues`, such as `courts`, `stay`, `beach`, `montage`, or `""` for no location), and `note`. A dinner can also carry a `menu` (see the Saturday dinner for the shape); it renders as a tap-to-open menu on the item.
 - **Links:** paste the group chat, playlist, or photo album URL into `event`. Empty links are hidden automatically.
 - **Times** are Cabo local time. The app converts them so the countdown and "Happening now" work on any phone anywhere.
 

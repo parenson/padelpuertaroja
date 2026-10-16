@@ -75,7 +75,31 @@ window.PPR = {
         { start: "10:30", end: "15:00", type: "free",       title: "Free Time",                        where: "stay",   note: "Beach, pool, spa, or a siesta. Lunch on your own." },
         { start: "15:00", end: "16:00", type: "showcase",   title: "Pro Showcase",                     where: "courts", note: "Exhibition from the pros. See how padel is supposed to be played." },
         { start: "16:00", end: "18:30", type: "match",      title: "Round Robin Matches",                where: "courts", note: "Everyone plays. Results seed Sunday's tournament." },
-        { start: "19:00", end: "21:30", type: "social",     title: "Dinner - TBA", where: "", note: "Tournament pairings and draw announced." }
+        { start: "19:00", end: "21:30", type: "social",     title: "Dinner at the Twin Dolphin Clubhouse", where: "clubhouse", note: "Family style. Tournament pairings and draw announced.",
+          menu: {
+            title: "Dinner · Family Style",
+            courses: [
+              { name: "Appetizers", items: [
+                { dish: "Spicy Tuna Crispy Rice", tags: "GF, DF", desc: "Spicy aioli, avocado, sesame seeds, seaweed" },
+                { dish: "Arugula Salad", tags: "GF", desc: "Roasted pear, asparagus, green beans, Parmesan, champagne vinaigrette" },
+                { dish: "Slow Cooked Brisket Tacos", tags: "GF, DF", desc: "Pickled cabbage, red onion, jalapeño" }
+              ] },
+              { name: "Mains · Grill", items: [
+                { dish: "Catch of the Day Mediterranean", tags: "GF", desc: "Tzatziki, Persian cucumber, heirloom tomato, basil, fresh green oil" },
+                { dish: "Grilled Jumbo Shrimp & Guajillo Oil", tags: "", desc: "" },
+                { dish: "Grill Roasted Fillet, Garlic Butter", tags: "", desc: "" }
+              ] },
+              { name: "Sides", items: [
+                { dish: "Rigatoni a la Vodka", tags: "GF", desc: "Spicy bell pepper and cashew cream, feta, basil, Parmesan" },
+                { dish: "Pan Roasted Broccolini", tags: "GF, DF", desc: "Pumpkin gremolata, balsamic reduction" },
+                { dish: "Grilled Organic Vegetables", tags: "GF, V, DF", desc: "Green chimichurri" }
+              ] },
+              { name: "Dessert", items: [
+                { dish: "Lava Cake", tags: "GF", desc: "Vanilla ice cream, raspberry compote" },
+                { dish: "Banana Soufflé", tags: "", desc: "Cardamom ice cream, caramelized banana" }
+              ] }
+            ]
+          } }
       ]
     },
     {

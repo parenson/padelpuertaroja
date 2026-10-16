@@ -14,6 +14,7 @@ Static site for a padel weekend in Cabo San Lucas, October 23–25, 2026. Live a
 - Keep `players` sorted alphabetically by last name. `pros` stay in the order given.
 - No role tags: leave `tag: ""` unless the organizer explicitly asks for a label.
 - Keep the organizer's wording exactly. Only tidy whitespace (double spaces, trailing spaces) and add a missing final period.
+- A schedule item may carry an optional `menu` object (title + courses, each with dish / tags / desc); copy the Saturday dinner's shape.
 - Schedule times are 24h Cabo local time. `where` must be a key in `venues`, or `""` for no location.
 - Before committing, validate: run `node -e "global.window={}; require('./data.js'); console.log('ok')"` and check for overlapping times, end-before-start, and unknown venue keys. Report anything odd to the organizer rather than guessing.
 
