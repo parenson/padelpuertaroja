@@ -8,11 +8,14 @@
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.4; }
 header { border-bottom: 1px solid var(--line); background: var(--ground); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
-.hin { max-width: 760px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
+.hin { max-width: 760px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .hin img { width: 34px; height: 35px; }
 .hin h1 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 15px; letter-spacing: .04em; }
 .hin h1 b { color: var(--rojo); font-weight: 400; }
 .hin .who { margin-left: auto; font-size: 13px; color: var(--ink-3); display: flex; gap: 8px; align-items: center; }
+.hin .who:empty + .back { margin-left: auto; }
+.hin .back { font-weight: 600; font-size: 14px; text-decoration: none; color: var(--rojo); border: 1.5px solid var(--rojo); border-radius: 10px; padding: 6px 10px; white-space: nowrap; }
+.hin .who:empty { display: none; }
 main { max-width: 760px; margin: 0 auto; padding: 18px 16px 60px; display: grid; gap: 16px; }
 .stack { display: grid; gap: 16px; }
 section.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 12px; }
