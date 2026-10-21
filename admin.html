@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La Víbora Admin</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/favicon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Graduate&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<header><div class="hin"><img src="assets/badge.png" alt=""><h1>LA VÍBORA <b>ADMIN</b></h1><div class="who" id="who"></div></div></header>
+<main>
+  <section class="card" id="login">
+    <h2>Organizer sign in</h2>
+    <p class="hint">Use the login created under Authentication → Users in Supabase.</p>
+    <div class="row">
+      <label>Email<input type="email" id="email" autocomplete="username"></label>
+      <label>Password<input type="password" id="password" autocomplete="current-password"></label>
+      <button class="btn" id="signin">Sign in</button>
+    </div>
+    <div class="status" id="login-status"></div>
+    <p class="hint"><a href="index.html">← Back to the portal</a></p>
+  </section>
+
+  <div id="app" class="stack" hidden>
+    <section class="card">
+      <h2>1 · Teams</h2>
+      <p class="hint">Each team is a pair. Pick two players, or type any name.</p>
+      <div class="row">
+        <label>Player 1<select id="p1"></select></label>
+        <label>Player 2<select id="p2"></select></label>
+        <label>Or type a name<input type="text" id="tname" placeholder="e.g. Arenson / Green"></label>
+        <button class="btn" id="addteam">Add team</button>
+      </div>
+      <div class="list" id="teams"></div>
+    </section>
+
+    <section class="card">
+      <h2>2 · Pools</h2>
+      <div class="row">
+        <label>Number of pools<select id="npools"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option></select></label>
+        <button class="btn ghost" id="genmatches">Generate pool matches</button>
+      </div>
+      <p class="hint">Assign each team to a pool in the Teams list, then generate. Re-generating keeps scores already entered.</p>
+    </section>
+
+    <section class="card">
+      <h2>3 · Pool play scores</h2>
+      <p class="hint">Enter games won by each team. Leave blank until the match is played.</p>
+      <div id="pools"></div>
+    </section>
+
+    <section class="card">
+      <h2>4 · Semifinals and Final</h2>
+      <p class="hint">Semifinal teams fill in from the standings. Change them if you like. The final fills from the semifinal winners.</p>
+      <div class="ko" id="ko"></div>
+    </section>
+
+    <section class="card">
+      <h2>Note on the bracket page</h2>
+      <label>Shown above the bracket (optional)<input type="text" id="tnote" placeholder="e.g. Finals on center court at 5pm" maxlength="140"></label>
+    </section>
+
+    <div class="savebar">
+      <button class="btn" id="save">Publish bracket</button>
+      <button class="btn quiet" id="reload">Reload</button>
+      <span class="status" id="save-status"></span>
+    </div>
+
+    <section class="card">
+      <h2>Gallery moderation</h2>
+      <p class="hint">Tap Remove under a photo to delete it from the gallery.</p>
+      <div class="photos" id="photos"></div>
+      <div class="status" id="photo-status"></div>
+    </section>
+  </div>
+</main>
+
+<script src="config.js"></script>
+<script src="data.js"></script>
+<script src="backend.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

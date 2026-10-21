@@ -13,6 +13,10 @@ No build step, no database. Static files only.
 | `manifest.webmanifest` | Makes "Add to Home Screen" install it like an app with the logo as the icon. |
 | `assets/` | `NewLogo.png` is the source logo. `logo.webp`, `badge.png`, and the icons are cut-out, resized versions generated from it. |
 | `build-artifact.py` | Bundles everything into `dist/puerta-roja.html`, a single file for the shareable preview link. |
+| `config.js` | Backend connection (Supabase project URL and publishable key) for the Gallery and Bracket. |
+| `backend.js` | Small client used by both pages to read photos and the bracket, upload photos, and (admin) write. |
+| `admin.html`, `admin.css`, `admin.js` | Organizer page: sign in, build teams and pools, enter scores, publish the bracket, remove photos. |
+| `supabase-setup.sql` | One-time backend setup. Paste into the Supabase SQL Editor and run. |
 | `.claude/launch.json` | Local preview server config. |
 
 ## Editing content
@@ -24,6 +28,14 @@ Open `data.js`. Every field is plain text.
 - **Links:** paste the group chat, playlist, or photo album URL into `event`. Empty links are hidden automatically.
 - **Weather:** each schedule day shows a live forecast from open-meteo.com for the coordinates in `event.weather`. No key or account needed. If the forecast can't load, the strip is simply hidden.
 - **Times** are Cabo local time. The app converts them so the countdown and "Happening now" work on any phone anywhere.
+
+## Gallery and Bracket (backend)
+
+Photos and the tournament bracket live in a free Supabase project, not in this repo, so they update instantly without a deploy.
+
+- **Participants** open the Gallery tab and tap Choose photos. Photos are shrunk on the phone before upload. Anyone with the link can add; only organizers can remove.
+- **Organizers** open `admin.html` (linked in the footer as "Organizers"), sign in, build the draw, enter scores, and tap Publish bracket. The Bracket tab updates within 30 seconds.
+- **Setup once:** run `supabase-setup.sql` in the SQL Editor, add each organizer under Authentication → Users (email + password) and make sure their email is in the `admins` table, then put the project URL and publishable key in `config.js`.
 
 ## Preview locally
 

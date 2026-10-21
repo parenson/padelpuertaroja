@@ -101,16 +101,16 @@
   .refresh:active { transform: scale(.94); }
   .refresh.spin svg { animation: spin .7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  nav.tabs { display: grid; grid-template-columns: repeat(4, 1fr); flex: 1 0 100%; margin: 0 -6px; }
+  nav.tabs { display: grid; grid-template-columns: repeat(6, 1fr); flex: 1 0 100%; margin: 0 -8px; }
   nav.tabs a {
-    text-decoration: none; text-align: center; color: var(--ink-3); font-weight: 600; font-size: 13px;
-    letter-spacing: .08em; text-transform: uppercase; padding: 10px 2px 9px; border-bottom: 3px solid transparent;
+    text-decoration: none; text-align: center; color: var(--ink-3); font-weight: 600; font-size: 11px;
+    letter-spacing: .04em; text-transform: uppercase; padding: 10px 1px 9px; border-bottom: 3px solid transparent; white-space: nowrap;
   }
   nav.tabs a[aria-current="page"] { color: var(--rojo); border-bottom-color: var(--rojo); }
 
   /* ---------- Layout ---------- */
   main { max-width: 720px; margin: 0 auto; padding: 20px 16px calc(40px + env(safe-area-inset-bottom, 0px)); }
-  section.screen[hidden] { display: none; }
+  [hidden] { display: none !important; }
   h1, h2, h3 { text-wrap: balance; margin: 0; }
   h2.screen-title { font-family: var(--display); font-weight: 400; font-size: 21px; letter-spacing: .04em; color: var(--rojo); text-transform: uppercase; }
   .screen-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
@@ -225,6 +225,43 @@
   .wx .det { color: var(--ink-2); font-size: 14px; font-variant-numeric: tabular-nums; display: flex; flex-wrap: wrap; gap: 4px 12px; }
   .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 16px; color: var(--ink-3); }
 
+  /* ---------- Bracket ---------- */
+  .pool table { border-collapse: collapse; width: 100%; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .pool th, .pool td { text-align: left; padding: 6px 6px; border-bottom: 1px solid var(--line); }
+  .pool th { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
+  .pool th.n, .pool td.n { text-align: right; width: 44px; }
+  .pool .ms { margin-top: 10px; display: grid; gap: 6px; }
+  .pool .m { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; font-size: 14px; color: var(--ink-2); }
+  .pool .m span:first-child { text-align: right; }
+  .pool .m b { font-variant-numeric: tabular-nums; color: var(--ink); background: var(--surface-2); border-radius: 6px; padding: 2px 8px; font-size: 13px; }
+  .pool .m .w { color: var(--ink); font-weight: 700; }
+  .ko-grid { display: grid; gap: 10px; }
+  .ko-m { background: var(--surface-2); border-radius: 12px; padding: 10px 12px; display: grid; gap: 4px; }
+  .ko-m .kt { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
+  .ko-m .line { display: flex; justify-content: space-between; gap: 10px; color: var(--ink-2); }
+  .ko-m .line.w { color: var(--ink); font-weight: 700; }
+  .ko-m .line b { font-variant-numeric: tabular-nums; min-width: 1.5em; text-align: right; }
+  .champ { background: var(--rojo); color: #fff; border-radius: 14px; padding: 18px 16px; text-align: center; font-family: var(--display); font-size: 20px; letter-spacing: .03em; }
+  .champ small { display: block; font-family: var(--body); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; opacity: .85; margin-bottom: 6px; }
+
+  /* ---------- Gallery ---------- */
+  .urow { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+  .upload input[type=text] { font: inherit; color: inherit; background: var(--ground); border: 1px solid var(--line); border-radius: 9px; padding: 8px 10px; width: 100%; min-width: 0; }
+  .filebtn { cursor: pointer; margin-top: 0; }
+  .status { font-size: 14px; color: var(--ink-3); min-height: 1.2em; margin-top: 8px; }
+  .gal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 12px; }
+  .gal.empty { display: block; }
+  .gal button { padding: 0; border: 0; background: var(--surface-2); aspect-ratio: 1; border-radius: 6px; overflow: hidden; cursor: pointer; width: 100%; }
+  .gal img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (min-width: 560px) { .gal { grid-template-columns: repeat(4, 1fr); gap: 6px; } }
+  .lb { position: fixed; inset: 0; background: rgba(12, 8, 8, .94); z-index: 50; display: grid; grid-template-rows: 1fr auto; }
+  .lb img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; margin: auto; display: block; padding-top: env(safe-area-inset-top, 0px); }
+  .lb .cap { color: #fff; padding: 12px 16px calc(14px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 12px; align-items: center; }
+  .lb .cap span { flex: 1; font-size: 15px; min-width: 0; }
+  .lb .cap small { display: block; opacity: .7; font-size: 13px; }
+  .lb button { background: rgba(255,255,255,.14); color: #fff; border: 0; border-radius: 50%; width: 40px; height: 40px; font-size: 22px; line-height: 1; cursor: pointer; flex: 0 0 auto; }
+  .lb .x { position: absolute; top: calc(10px + env(safe-area-inset-top, 0px)); right: 12px; }
+
   /* ---------- Info ---------- */
   .stack { display: grid; gap: 12px; }
   .venue { display: grid; gap: 4px; }
@@ -265,7 +302,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg>
     </button>
     <nav class="tabs" aria-label="Sections">
-      <a href="#home">Home</a><a href="#players">Players</a><a href="#schedule">Schedule</a><a href="#info">Info</a>
+      <a href="#home">Home</a><a href="#players">Players</a><a href="#schedule">Schedule</a><a href="#bracket">Bracket</a><a href="#gallery">Gallery</a><a href="#info">Info</a>
     </nav>
   </div>
 </header>
@@ -326,6 +363,33 @@
     </div>
   </section>
 
+  <!-- BRACKET -->
+  <section class="screen" id="bracket" aria-label="Bracket" hidden>
+    <div class="screen-head">
+      <h2 class="screen-title">La Víbora Cup</h2>
+      <p id="bracket-updated"></p>
+    </div>
+    <div class="stack" id="bracket-body"></div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="screen" id="gallery" aria-label="Gallery" hidden>
+    <div class="screen-head">
+      <h2 class="screen-title">Gallery</h2>
+      <p id="gal-count"></p>
+    </div>
+    <div class="card upload" id="gal-upload">
+      <h3 class="t">Add your photos</h3>
+      <div class="urow">
+        <input type="text" id="gal-name" placeholder="Your name" maxlength="40" aria-label="Your name" autocomplete="name">
+        <input type="text" id="gal-caption" placeholder="Caption (optional)" maxlength="140" aria-label="Caption">
+      </div>
+      <label class="btn filebtn"><input type="file" id="gal-file" accept="image/*" multiple hidden>Choose photos</label>
+      <div class="status" id="gal-status"></div>
+    </div>
+    <div class="gal" id="gal-grid"></div>
+  </section>
+
   <!-- INFO -->
   <section class="screen" id="info" aria-label="Info" hidden>
     <div class="screen-head">
@@ -334,10 +398,18 @@
     <div class="stack" id="info-stack"></div>
   </section>
 
-  <footer>La Víbora Invitational · Cabo San Lucas · 2026</footer>
+  <footer>La Víbora Invitational · Cabo San Lucas · 2026 · <a href="admin.html">Organizers</a></footer>
 </main>
 
+<div class="lb" id="lb" hidden role="dialog" aria-label="Photo">
+  <button class="x" id="lb-x" aria-label="Close">×</button>
+  <img id="lb-img" alt="">
+  <div class="cap"><button id="lb-prev" aria-label="Previous">‹</button><span id="lb-cap"></span><button id="lb-next" aria-label="Next">›</button></div>
+</div>
 
+
+<script src="config.js"></script>
+<script src="backend.js"></script>
 <script src="data.js"></script>
 <script>
 (function () {
@@ -356,7 +428,7 @@
   const venueName = key => (D.venues[key] || {}).short || "";
 
   // ---- routing ----
-  const screens = ["home", "players", "schedule", "info"];
+  const screens = ["home", "players", "schedule", "bracket", "gallery", "info"];
   function route() {
     let id = (location.hash || "#home").slice(1);
     if (!screens.includes(id)) id = "home";
@@ -366,6 +438,8 @@
       if (a.closest("nav")) { if (cur) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); }
     });
     window.scrollTo({ top: 0 });
+    if (id === "bracket") loadBracket();
+    if (id === "gallery") loadGallery();
   }
   window.addEventListener("hashchange", route);
 
@@ -525,9 +599,127 @@
     st.appendChild(hs);
   }
 
+  // ---- bracket and gallery (live data from the backend) ----
+  const B = window.Backend;
+  const noteCard = (title, text) => { const c = el("div", "card"); c.innerHTML = `<h3 class="t">${esc(title)}</h3><p class="note" style="margin:0">${esc(text)}</p>`; return c; };
+  let T = null, TU = null;
+  const tname = id => (((T && T.teams) || []).find(t => t.id === id) || {}).name || "TBD";
+  const winner = m => (m && m.sa != null && m.sb != null && m.sa !== m.sb) ? (m.sa > m.sb ? m.a : m.b) : null;
+  function standings(p) {
+    const rows = T.teams.filter(t => t.pool === p).map(t => ({ id: t.id, name: t.name, W: 0, L: 0, GF: 0, GA: 0 }));
+    const by = Object.fromEntries(rows.map(r => [r.id, r]));
+    (T.matches || []).filter(m => m.pool === p && m.sa != null && m.sb != null).forEach(m => {
+      const a = by[m.a], b = by[m.b]; if (!a || !b) return;
+      a.GF += m.sa; a.GA += m.sb; b.GF += m.sb; b.GA += m.sa;
+      if (m.sa > m.sb) { a.W++; b.L++; } else if (m.sb > m.sa) { b.W++; a.L++; }
+    });
+    return rows.sort((x, y) => y.W - x.W || (y.GF - y.GA) - (x.GF - x.GA) || y.GF - x.GF || x.name.localeCompare(y.name));
+  }
+  function renderBracket() {
+    const body = $("#bracket-body"); body.innerHTML = "";
+    $("#bracket-updated").textContent = TU && T && T.teams && T.teams.length ? "Updated " + new Date(TU).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : "";
+    if (!T || !T.teams || !T.teams.length) { body.appendChild(noteCard("Draw not posted yet", "Teams, pools, and results will appear here once the organizers publish them.")); return; }
+    if (T.note) { const n = el("p", "note"); n.style.margin = "0"; n.textContent = T.note; body.appendChild(n); }
+    ["A", "B", "C", "D"].slice(0, T.npools || 1).filter(p => T.teams.some(t => t.pool === p)).forEach(p => {
+      const st = standings(p), ms = (T.matches || []).filter(m => m.pool === p);
+      const c = el("div", "card pool");
+      c.innerHTML = `<h3 class="t">Pool ${p}</h3>
+        <table><thead><tr><th>Team</th><th class="n">W</th><th class="n">L</th><th class="n">+/−</th></tr></thead>
+        <tbody>${st.map(r => `<tr><td>${esc(r.name)}</td><td class="n">${r.W}</td><td class="n">${r.L}</td><td class="n">${r.GF - r.GA > 0 ? "+" : ""}${r.GF - r.GA}</td></tr>`).join("")}</tbody></table>
+        ${ms.length ? `<div class="ms">${ms.map(m => { const done = m.sa != null && m.sb != null; return `<div class="m"><span class="${done && m.sa > m.sb ? "w" : ""}">${esc(tname(m.a))}</span><b>${done ? `${m.sa} – ${m.sb}` : "vs"}</b><span class="${done && m.sb > m.sa ? "w" : ""}">${esc(tname(m.b))}</span></div>`; }).join("")}</div>` : ""}`;
+      body.appendChild(c);
+    });
+    const ko = T.ko || {}, semis = ko.semis || [], f = ko.final || {};
+    const has = m => m && (m.a || m.b);
+    if (has(semis[0]) || has(semis[1]) || has(f)) {
+      const c = el("div", "card"); c.innerHTML = `<h3 class="t">Knockout</h3>`;
+      const g = el("div", "ko-grid");
+      const block = (title, m) => { if (!has(m)) return; const w = winner(m); const d = el("div", "ko-m");
+        d.innerHTML = `<div class="kt">${title}</div><div class="line ${w && w === m.a ? "w" : ""}"><span>${esc(tname(m.a))}</span><b>${m.sa ?? ""}</b></div><div class="line ${w && w === m.b ? "w" : ""}"><span>${esc(tname(m.b))}</span><b>${m.sb ?? ""}</b></div>`;
+        g.appendChild(d); };
+      block("Semifinal 1", semis[0]); block("Semifinal 2", semis[1]); block("Final", f);
+      c.appendChild(g); body.appendChild(c);
+      const ch = winner(f);
+      if (ch) { const d = el("div", "champ"); d.innerHTML = `<small>La Víbora Cup champions</small>🏆 ${esc(tname(ch))}`; body.appendChild(d); }
+    }
+  }
+  async function loadBracket() {
+    const body = $("#bracket-body");
+    if (!B.ready()) { body.replaceChildren(noteCard("Coming online", "The bracket switches on once the weekend backend is connected.")); return; }
+    try { const row = await B.getTournament(); T = row && row.data; TU = row && row.updated_at; renderBracket(); }
+    catch (e) { if (!T) body.replaceChildren(noteCard("Bracket unavailable", "Couldn't reach the server. Tap the refresh button to try again.")); }
+  }
+
+  let PH = [], lbIdx = 0;
+  function renderGallery() {
+    const g = $("#gal-grid"); g.innerHTML = "";
+    $("#gal-count").textContent = PH.length ? `${PH.length} photo${PH.length === 1 ? "" : "s"}` : "";
+    if (!PH.length) { g.classList.add("empty"); g.appendChild(noteCard("No photos yet", "Be the first. Photos from everyone show up here all weekend.")); return; }
+    g.classList.remove("empty");
+    PH.forEach((p, i) => { const b = el("button"); b.type = "button"; b.setAttribute("aria-label", p.caption || "Open photo"); b.innerHTML = `<img src="${esc(B.publicUrl(p.thumb))}" alt="" loading="lazy">`; b.addEventListener("click", () => openLb(i)); g.appendChild(b); });
+  }
+  async function loadGallery() {
+    if (!B.ready()) { $("#gal-upload").hidden = true; $("#gal-grid").replaceChildren(noteCard("Coming online", "The gallery switches on once the weekend backend is connected.")); return; }
+    try { PH = await B.listPhotos(); renderGallery(); }
+    catch (e) { $("#gal-status").textContent = "Couldn't load photos: " + e.message; }
+  }
+  function shrink(file, max, q) {
+    return new Promise((res, rej) => {
+      const url = URL.createObjectURL(file), img = new Image();
+      img.onload = () => {
+        const s = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+        const w = Math.round(img.naturalWidth * s), h = Math.round(img.naturalHeight * s);
+        const c = document.createElement("canvas"); c.width = w; c.height = h; c.getContext("2d").drawImage(img, 0, 0, w, h);
+        URL.revokeObjectURL(url);
+        c.toBlob(b => b ? res({ blob: b, w, h }) : rej(new Error("Could not process image")), "image/jpeg", q);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); rej(new Error("That file isn't a supported image")); };
+      img.src = url;
+    });
+  }
+  async function uploadFiles(files) {
+    const name = $("#gal-name").value.trim(), caption = $("#gal-caption").value.trim(), status = $("#gal-status");
+    try { localStorage.setItem("ppr_name", name); } catch (e) {}
+    const btn = $(".filebtn"); btn.style.pointerEvents = "none"; btn.style.opacity = ".6";
+    let n = 0, ok = 0;
+    for (const f of files) {
+      n++; status.textContent = `Uploading ${n} of ${files.length}…`;
+      try {
+        const full = await shrink(f, 1600, .82), th = await shrink(f, 420, .74);
+        const id = (crypto.randomUUID ? crypto.randomUUID() : Date.now() + "-" + Math.random().toString(16).slice(2));
+        const path = `full/${id}.jpg`, thumb = `thumb/${id}.jpg`;
+        await B.uploadBlob(path, full.blob); await B.uploadBlob(thumb, th.blob);
+        const rows = await B.addPhoto({ path, thumb, caption, uploader: name, w: full.w, h: full.h });
+        PH.unshift(rows[0]); renderGallery(); ok++;
+      } catch (e) { status.textContent = "Upload failed: " + e.message; btn.style.pointerEvents = ""; btn.style.opacity = ""; return; }
+    }
+    status.textContent = ok === 1 ? "Added. Thanks!" : `Added ${ok} photos. Thanks!`;
+    $("#gal-caption").value = ""; $("#gal-file").value = ""; btn.style.pointerEvents = ""; btn.style.opacity = "";
+  }
+  $("#gal-file").addEventListener("change", e => { const fs = [...e.target.files]; if (fs.length) uploadFiles(fs); });
+  try { $("#gal-name").value = localStorage.getItem("ppr_name") || ""; } catch (e) {}
+
+  function openLb(i) { lbIdx = i; showLb(); $("#lb").hidden = false; document.body.style.overflow = "hidden"; }
+  function showLb() {
+    const p = PH[lbIdx]; if (!p) return closeLb();
+    $("#lb-img").src = B.publicUrl(p.path);
+    const when = new Date(p.created_at).toLocaleString([], { weekday: "short", hour: "numeric", minute: "2-digit" });
+    $("#lb-cap").innerHTML = `${esc(p.caption || "")}<small>${esc(p.uploader || "")}${p.uploader ? " · " : ""}${esc(when)}</small>`;
+  }
+  function closeLb() { $("#lb").hidden = true; $("#lb-img").removeAttribute("src"); document.body.style.overflow = ""; }
+  const lbStep = d => { if (!PH.length) return; lbIdx = (lbIdx + d + PH.length) % PH.length; showLb(); };
+  $("#lb-x").addEventListener("click", closeLb);
+  $("#lb-prev").addEventListener("click", () => lbStep(-1));
+  $("#lb-next").addEventListener("click", () => lbStep(1));
+  $("#lb").addEventListener("click", e => { if (e.target === e.currentTarget) closeLb(); });
+  document.addEventListener("keydown", e => { if ($("#lb").hidden) return; if (e.key === "Escape") closeLb(); if (e.key === "ArrowLeft") lbStep(-1); if (e.key === "ArrowRight") lbStep(1); });
+  let tx = null;
+  $("#lb").addEventListener("touchstart", e => { tx = e.touches[0].clientX; }, { passive: true });
+  $("#lb").addEventListener("touchend", e => { if (tx == null) return; const dx = e.changedTouches[0].clientX - tx; tx = null; if (Math.abs(dx) > 40) lbStep(dx < 0 ? 1 : -1); });
+
   buildQuick(); buildPlayers(); buildSeg(); renderDay(); buildInfo(); tickHome(); route(); loadWeather();
   requestAnimationFrame(() => window.scrollTo(0, 0));
-  setInterval(() => { tickHome(); if (!$("#schedule").hidden) renderDay(); }, 30000);
+  setInterval(() => { tickHome(); if (!$("#schedule").hidden) renderDay(); if (!$("#bracket").hidden) loadBracket(); if (!$("#gallery").hidden) loadGallery(); }, 30000);
 })();
 </script>
 </body>
