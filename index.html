@@ -664,7 +664,7 @@
     const body = $("#bracket-body");
     if (!B.ready()) { body.replaceChildren(noteCard("Coming online", "The bracket switches on once the weekend backend is connected.")); return; }
     try { const row = await B.getTournament(); T = row && row.data; TU = row && row.updated_at; renderBracket(); }
-    catch (e) { if (!T) body.replaceChildren(noteCard("Bracket unavailable", "Couldn't reach the server. Tap the refresh button to try again.")); }
+    catch (e) { if (!T) body.replaceChildren(noteCard("Bracket unavailable", "Couldn't reach the server (" + (e && e.message || "unknown error") + "). Tap the refresh button to try again.")); }
   }
 
   let PH = [], lbIdx = 0;
