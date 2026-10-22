@@ -18,6 +18,9 @@ window.Backend = (function () {
 
   async function req(path, opts) {
     opts = opts || {};
+    // An organizer login (admin page) is shared with the portal on the same phone. Refresh it when it has
+    // expired, or drop it and fall back to the public key, so reads never fail with "JWT expired".
+    if (session) await ensureFresh();
     const headers = Object.assign({ apikey: cfg.anonKey, Authorization: "Bearer " + (session ? session.access_token : cfg.anonKey) }, opts.headers || {});
     const r = await fetch(cfg.url + path, Object.assign({}, opts, { headers }));
     if (!r.ok) {
@@ -34,14 +37,21 @@ window.Backend = (function () {
     const s = await req("/auth/v1/token?grant_type=password", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, password }) });
     setSession(s); return s;
   }
+  let refreshing = null; // one refresh at a time, so parallel requests share it
   async function ensureFresh() {
     if (!session) return null;
     if (session.expires_at - 60 > Date.now() / 1000) return session;
-    try {
-      const r = await fetch(cfg.url + "/auth/v1/token?grant_type=refresh_token", { method: "POST", headers: { apikey: cfg.anonKey, "Content-Type": "application/json" }, body: JSON.stringify({ refresh_token: session.refresh_token }) });
-      if (!r.ok) throw new Error("refresh failed");
-      setSession(await r.json());
-    } catch (e) { setSession(null); }
+    if (!refreshing) {
+      refreshing = (async () => {
+        try {
+          const r = await fetch(cfg.url + "/auth/v1/token?grant_type=refresh_token", { method: "POST", headers: { apikey: cfg.anonKey, "Content-Type": "application/json" }, body: JSON.stringify({ refresh_token: session.refresh_token }) });
+          if (!r.ok) throw new Error("refresh failed");
+          setSession(await r.json());
+        } catch (e) { setSession(null); }
+        refreshing = null;
+      })();
+    }
+    await refreshing;
     return session;
   }
   const signOut = () => setSession(null);
