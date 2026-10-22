@@ -8,7 +8,8 @@
   const people = [...(D.players || []), ...(D.pros || [])].map(p => p.name);
 
   // ---------- state ----------
-  let S = { teams: [], npools: 2, matches: [], ko: { semis: [{}, {}], final: {} }, note: "" };
+  const blankKO = () => ({ semis: [{}, {}], final: {}, third: {}, csemis: [{}, {}], cfinal: {} });
+  let S = { teams: [], npools: 2, matches: [], ko: blankKO(), note: "" };
   const team = id => S.teams.find(t => t.id === id);
   const tname = id => (team(id) || {}).name || "TBD";
   const poolNames = ["A", "B", "C", "D"];
@@ -93,45 +94,78 @@
   }
 
   // ---------- knockout ----------
-  function seedSemis() {
-    const s = S.ko.semis;
-    if (s[0].a || s[0].b || s[1].a || s[1].b) return;
-    const st = poolNames.slice(0, S.npools).map(standings);
-    if (S.npools >= 2 && st[0].length >= 2 && st[1].length >= 2) { s[0].a = st[0][0].id; s[0].b = st[1][1].id; s[1].a = st[1][0].id; s[1].b = st[0][1].id; }
-    else if (S.npools === 1 && st[0].length >= 4) { s[0].a = st[0][0].id; s[0].b = st[0][3].id; s[1].a = st[0][1].id; s[1].b = st[0][2].id; }
-  }
+  // Championship: top two of each pool → semifinals → final, semifinal losers → 3rd place.
+  // Consolation: bottom two of each pool → consolation semifinals → consolation final.
   const winner = m => (m.sa != null && m.sb != null && m.sa !== m.sb) ? (m.sa > m.sb ? m.a : m.b) : null;
-  const champLine = () => { const c = winner(S.ko.final); return c ? `🏆 <strong>Champions: ${esc(tname(c))}</strong>` : '<span class="hint">Champion appears once the final has a score.</span>'; };
+  const loser = m => { const w = winner(m); return w ? (w === m.a ? m.b : m.a) : null; };
+  const scored = m => m.sa != null || m.sb != null;
+  const poolPlayDone = () => S.matches.length > 0 && S.matches.every(m => m.sa != null && m.sb != null);
+
+  // Fills a match slot from the standings or an earlier result, unless the organizer picked the team by hand.
+  function fill(m, side, id) {
+    if (m[side + "Manual"]) return;
+    if (scored(m) && m[side]) return;          // never move a team out of a match that already has a score
+    m[side] = id || "";
+  }
+  function autoSeed() {
+    const k = S.ko, st = poolNames.slice(0, S.npools).map(standings);
+    const at = (p, i) => (st[p] && st[p][i] ? st[p][i].id : "");
+    if (poolPlayDone()) {
+      if (S.npools >= 2) {
+        fill(k.semis[0], "a", at(0, 0)); fill(k.semis[0], "b", at(1, 1)); fill(k.semis[1], "a", at(1, 0)); fill(k.semis[1], "b", at(0, 1));
+        fill(k.csemis[0], "a", at(0, 2)); fill(k.csemis[0], "b", at(1, 3)); fill(k.csemis[1], "a", at(1, 2)); fill(k.csemis[1], "b", at(0, 3));
+      } else {
+        fill(k.semis[0], "a", at(0, 0)); fill(k.semis[0], "b", at(0, 3)); fill(k.semis[1], "a", at(0, 1)); fill(k.semis[1], "b", at(0, 2));
+        fill(k.csemis[0], "a", at(0, 4)); fill(k.csemis[0], "b", at(0, 7)); fill(k.csemis[1], "a", at(0, 5)); fill(k.csemis[1], "b", at(0, 6));
+      }
+    } else {
+      [...k.semis, ...k.csemis].forEach(m => { fill(m, "a", ""); fill(m, "b", ""); });
+    }
+    fill(k.final, "a", winner(k.semis[0])); fill(k.final, "b", winner(k.semis[1]));
+    fill(k.third, "a", loser(k.semis[0])); fill(k.third, "b", loser(k.semis[1]));
+    fill(k.cfinal, "a", winner(k.csemis[0])); fill(k.cfinal, "b", winner(k.csemis[1]));
+  }
+  function resultLines() {
+    const k = S.ko, c = winner(k.final), t = winner(k.third), cw = winner(k.cfinal);
+    const out = [];
+    if (c) out.push(`🏆 <strong>Champions: ${esc(tname(c))}</strong> · Runners-up: ${esc(tname(loser(k.final)))}`);
+    if (t) out.push(`🥉 3rd place: ${esc(tname(t))}`);
+    if (cw) out.push(`Consolation winners: ${esc(tname(cw))}`);
+    if (!out.length) out.push('<span class="hint">Champion appears once the final has a score.</span>');
+    if (!poolPlayDone()) out.unshift('<span class="hint">Semifinal teams fill in automatically once every pool match has a score. Pick teams by hand any time.</span>');
+    return out.join("<br>");
+  }
+  const KO_BLOCKS = () => [
+    ["Semifinal 1", S.ko.semis[0]], ["Semifinal 2", S.ko.semis[1]], ["Final", S.ko.final], ["3rd place match", S.ko.third],
+    ["Consolation semifinal 1", S.ko.csemis[0]], ["Consolation semifinal 2", S.ko.csemis[1]], ["Consolation final", S.ko.cfinal]
+  ];
   function renderKO() {
-    seedSemis();
-    const f = S.ko.final, w1 = winner(S.ko.semis[0]), w2 = winner(S.ko.semis[1]);
-    if (!f.a && w1) f.a = w1; if (!f.b && w2) f.b = w2;
+    autoSeed();
     const wrap = $("#ko"); wrap.innerHTML = "";
     const opts = v => '<option value="">—</option>' + S.teams.map(t => `<option value="${t.id}" ${t.id === v ? "selected" : ""}>${esc(t.name)}</option>`).join("");
-    const block = (title, m) => {
-      const d = document.createElement("div"); d.className = "m";
+    KO_BLOCKS().forEach(([title, m], i) => {
+      const d = document.createElement("div"); d.className = "m"; d.dataset.ko = i;
+      if (i === 4) { const h = document.createElement("h3"); h.textContent = "Consolation bracket"; h.style.marginTop = "6px"; wrap.appendChild(h); }
       d.innerHTML = `<h3>${title}</h3>
         <div class="sel"><select aria-label="Team">${opts(m.a)}</select><input type="number" min="0" max="99" inputmode="numeric" value="${m.sa ?? ""}" aria-label="Score"></div>
         <div class="sel"><select aria-label="Team">${opts(m.b)}</select><input type="number" min="0" max="99" inputmode="numeric" value="${m.sb ?? ""}" aria-label="Score"></div>`;
       const [sa, sb] = d.querySelectorAll("select"), [ia, ib] = d.querySelectorAll("input");
-      sa.addEventListener("change", () => { m.a = sa.value; if (m === f) $("#champ").innerHTML = champLine(); });
-      sb.addEventListener("change", () => { m.b = sb.value; if (m === f) $("#champ").innerHTML = champLine(); });
-      ia.addEventListener("input", () => { m.sa = ia.value === "" ? null : +ia.value; m === f ? ($("#champ").innerHTML = champLine()) : syncFinal(); });
-      ib.addEventListener("input", () => { m.sb = ib.value === "" ? null : +ib.value; m === f ? ($("#champ").innerHTML = champLine()) : syncFinal(); });
-      return d;
-    };
-    wrap.appendChild(block("Semifinal 1", S.ko.semis[0]));
-    wrap.appendChild(block("Semifinal 2", S.ko.semis[1]));
-    wrap.appendChild(block("Final", f));
-    const c = document.createElement("p"); c.id = "champ"; c.innerHTML = champLine();
+      sa.addEventListener("change", () => { m.a = sa.value; m.aManual = !!sa.value; syncKO(); });
+      sb.addEventListener("change", () => { m.b = sb.value; m.bManual = !!sb.value; syncKO(); });
+      ia.addEventListener("input", () => { m.sa = ia.value === "" ? null : +ia.value; syncKO(); });
+      ib.addEventListener("input", () => { m.sb = ib.value === "" ? null : +ib.value; syncKO(); });
+      wrap.appendChild(d);
+    });
+    const c = document.createElement("p"); c.id = "champ"; c.innerHTML = resultLines();
     wrap.appendChild(c);
   }
-  function syncFinal() {
-    const f = S.ko.final, w1 = winner(S.ko.semis[0]), w2 = winner(S.ko.semis[1]);
-    if (w1) f.a = w1; if (w2) f.b = w2;
-    const fin = $("#ko").children[2];
-    if (fin) { const [sa, sb] = fin.querySelectorAll("select"); sa.value = f.a || ""; sb.value = f.b || ""; }
-    $("#champ").innerHTML = champLine();
+  function syncKO() { // re-derive later rounds and update the selects without re-rendering (keeps focus in the inputs)
+    autoSeed();
+    KO_BLOCKS().forEach(([, m], i) => {
+      const d = document.querySelector(`#ko [data-ko="${i}"]`); if (!d) return;
+      const [sa, sb] = d.querySelectorAll("select"); sa.value = m.a || ""; sb.value = m.b || "";
+    });
+    $("#champ").innerHTML = resultLines();
   }
 
   function renderAll() { renderTeams(); renderPools(); renderKO(); $("#npools").value = S.npools; $("#tnote").value = S.note || ""; }
@@ -141,7 +175,10 @@
     const st = $("#save-status"); st.className = "status"; st.textContent = "Loading…";
     try {
       const row = await B.getTournament();
-      if (row && row.data && row.data.teams) S = Object.assign({ npools: 2, matches: [], ko: { semis: [{}, {}], final: {} }, note: "" }, row.data);
+      if (row && row.data && row.data.teams) {
+        S = Object.assign({ npools: 2, matches: [], note: "" }, row.data);
+        S.ko = Object.assign(blankKO(), S.ko || {}); // older published brackets have no 3rd place or consolation yet
+      }
       renderAll();
       st.textContent = row && row.data && row.data.teams ? "Last published " + new Date(row.updated_at).toLocaleString() : "Nothing published yet.";
     } catch (e) { st.className = "status err"; st.textContent = "Could not load: " + e.message; }
