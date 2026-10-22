@@ -18,6 +18,17 @@ window.PPR = {
     photoDrop: ""           // paste a shared album link here
   },
 
+  // Shown on the Bracket tab, above the draw. One line per bullet.
+  tournament: {
+    title: "La Víbora Cup · How it works",
+    format: [
+      "Teams and the bracket are set by the pros at the Saturday night dinner.",
+      "2 pools of 4 teams. Each team plays a set against the other 3 teams in their pool.",
+      "The top two teams in each pool advance to the semifinals. Semifinal winners play in the final, the losers play for 3rd place.",
+      "The 4 teams who do not make the semifinals move to a consolation bracket with its own semifinals and final."
+    ]
+  },
+
   venues: {
     courts: {
       name: "The Courts at Twin Dolphins",
@@ -76,8 +87,8 @@ window.PPR = {
         { start: "09:00", end: "10:30", type: "match",      title: "King of the Court",              where: "courts", note: "Let's separate the men from the boys." },
         { start: "10:30", end: "14:30", type: "free",       title: "Free Time",                        where: "stay",   note: "Beach, pool, spa, or a siesta. Lunch on your own." },
         { start: "14:30", end: "15:30", type: "showcase",   title: "Pro Showcase",                     where: "courts", note: "Exhibition from the pros. See how padel is supposed to be played." },
-        { start: "15:30", end: "18:00", type: "match",      title: "Round Robin Matches",                where: "courts", note: "Everyone plays. Results seed Sunday's tournament." },
-        { start: "19:00", end: "21:30", type: "social",     title: "Dinner at the Twin Dolphin Clubhouse", where: "clubhouse", note: "Family style. Tournament pairings and draw announced.",
+        { start: "15:30", end: "18:00", type: "match",      title: "Round Robin Matches",                where: "courts", note: "Everyone plays. Friday and Saturday rounds give the pros a good look at all the players before they set Sunday's teams." },
+        { start: "19:00", end: "21:30", type: "social",     title: "Dinner at the Twin Dolphin Clubhouse", where: "clubhouse", note: "Family style. The pros set the tournament teams and the bracket for Sunday, announced at dinner.",
           menu: {
             title: "Dinner · Family Style",
             courses: [
@@ -108,7 +119,7 @@ window.PPR = {
       date: "2026-10-25", label: "Sunday", sub: "Oct 25 · Tournament",
       items: [
         { start: "08:00", end: "08:30", type: "clinic",     title: "Tournament Warm-Up",           where: "courts", note: "Let the games begin!" },
-        { start: "08:30", end: "11:30", type: "tournament", title: "La Víbora Cup",   where: "courts", note: "Pool play followed by Semifinals and Finals." },
+        { start: "08:30", end: "11:30", type: "tournament", title: "La Víbora Cup",   where: "courts", note: "2 pools of 4 teams, one set against each team in your pool. Top two in each pool advance to the semifinals, then the final and a 3rd place match. The other four teams play the consolation semifinals and final." },
         { start: "11:30", end: "15:30", type: "free",       title: "Free Time",                    where: "stay",   note: "Enjoy the day. Heal from the weekend." },
         { start: "16:00", end: "18:00", type: "match", title: "Open Play",                   where: "courts", note: "For those who just can't get enough." },
         { start: "19:00", end: "21:00", type: "social",     title: "Dinner at Talay",     where: "montage", note: "Thai street food at the Montage. Last night, make it count." }

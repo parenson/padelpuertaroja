@@ -35,6 +35,7 @@ Photos and the tournament bracket live in a free Supabase project, not in this r
 
 - **Participants** open the Gallery tab and tap Choose photos. Photos are shrunk on the phone before upload. Anyone with the link can add; only organizers can remove.
 - **Organizers** open `admin.html` (linked in the footer as "Organizers"), sign in, build the draw, enter scores, and tap Publish bracket. The Bracket tab updates within 30 seconds.
+- **Format:** two pools, then a championship bracket (semifinals, final, 3rd place match) for the top two in each pool and a consolation bracket (semifinals, final) for the rest. Once every pool match has a score the admin page fills the semifinals from the standings and the later rounds from results; any team can be changed by hand. The "How it works" text on the Bracket tab comes from `tournament` in `data.js`.
 - **Setup once:** run `supabase-setup.sql` in the SQL Editor, add each organizer under Authentication → Users (email + password) and make sure their email is in the `admins` table, then put the project URL and publishable key in `config.js`.
 
 ## Preview locally
