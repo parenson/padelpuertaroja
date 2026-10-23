@@ -77,7 +77,8 @@ window.PPR = {
         { start: "15:00", end: "15:30", type: "social",     title: "Warm Up at The Courts",    where: "courts", note: "Check in, grab a racket, hit a few balls." },
         { start: "15:30", end: "16:30", type: "clinic",     title: "Work with the Pros",           where: "courts", note: "Kick off the weekend with some work on the fundamentals." },
         { start: "16:30", end: "18:00", type: "match",      title: "Day 1 Matches",            where: "courts", note: "Rotating partners, short sets, constant action." },
-        { start: "19:30", end: "21:00", type: "social",     title: "Welcome Dinner at Ecco",   where: "stay",   note: "Oceanfront at Maravilla." }
+        { start: "19:30", end: "21:00", type: "social",     title: "Welcome Dinner at Ecco",   where: "stay",   note: "Oceanfront at Maravilla." },
+        { start: "21:00", end: "23:15", type: "social",     title: "Top Gun: Maverick Screening", where: "stay",   note: "Maravilla Movie Theater." }
       ]
     },
     {
