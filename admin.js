@@ -235,7 +235,7 @@
     const st = $("#pool-status-line"); st.className = "status";
     PL.teamA = $("#pool-a").value.trim(); PL.teamB = $("#pool-b").value.trim();
     PL.status = $("#pool-status").value; PL.winner = $("#pool-winner").value || null;
-    PL.min = Math.max(1, +$("#pool-min").value || 1); PL.max = Math.max(PL.min, +$("#pool-max").value || 10000);
+    PL.min = Math.max(1, +$("#pool-min").value || 1); PL.max = +$("#pool-max").value || null; if (PL.max && PL.max < PL.min) PL.max = PL.min;
     if (PL.status === "settled" && !PL.winner) { st.className = "status err"; st.textContent = "Pick the winner before settling."; return; }
     st.textContent = "Saving…";
     try { await B.savePool(PL); renderPool(); st.className = "status ok"; st.textContent = "Saved " + new Date().toLocaleTimeString() + ". The Odds tab updates within a minute."; }
