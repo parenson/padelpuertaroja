@@ -86,9 +86,10 @@ window.PPR = {
       items: [
         { start: "08:00", end: "09:00", type: "clinic",     title: "Morning Clinic: Game Essentials", where: "courts", note: "Serves, returns, vibora, bandeja, wall strategy, team work." },
         { start: "09:00", end: "10:30", type: "match",      title: "King of the Court",              where: "courts", note: "Let's separate the men from the boys." },
-        { start: "10:30", end: "14:30", type: "free",       title: "Free Time",                        where: "stay",   note: "Beach, pool, spa, or a siesta. Lunch on your own." },
-        { start: "14:30", end: "15:30", type: "showcase",   title: "Pro Showcase",                     where: "courts", note: "Exhibition from the pros. See how padel is supposed to be played." },
-        { start: "15:30", end: "18:00", type: "match",      title: "Round Robin Matches",                where: "courts", note: "Everyone plays. Friday and Saturday rounds give the pros a good look at all the players before they set Sunday's teams." },
+        { start: "10:30", end: "15:00", type: "free",       title: "Free Time",                        where: "stay",   note: "Beach, pool, spa, or a siesta. Lunch on your own." },
+        { start: "15:00", end: "16:00", type: "match",      title: "Group Play: King of the Court",    where: "courts", note: "Rotating partners. Sets to four. Winners move up, losers move down." },
+        { start: "16:00", end: "16:45", type: "showcase",   title: "Pro Showcase",                     where: "courts", note: "Exhibition from the pros. See how padel is supposed to be played." },
+        { start: "16:45", end: "18:00", type: "match",      title: "Group Play Continues",             where: "courts", note: "Friday and Saturday rounds give the pros a good look at all the players before they set Sunday's teams." },
         { start: "19:00", end: "21:30", type: "social",     title: "Dinner at the Twin Dolphin Clubhouse", where: "clubhouse", note: "Family style. The pros set the tournament teams and the bracket for Sunday, announced at dinner.",
           menu: {
             title: "Dinner · Family Style",
