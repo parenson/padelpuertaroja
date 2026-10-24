@@ -70,6 +70,32 @@ window.Backend = (function () {
     });
   }
 
+  // ---- showcase betting pool (settings in tournament row 2, bets in the bets table) ----
+  const POOL = 2;
+  async function getPool() {
+    const rows = await req("/rest/v1/tournament?id=eq." + POOL + "&select=data,updated_at", { headers: { Accept: "application/json" } });
+    return rows[0] || null;
+  }
+  async function savePool(data) {
+    await ensureFresh();
+    return req("/rest/v1/tournament", {
+      method: "POST", headers: { "Content-Type": "application/json", Prefer: "resolution=merge-duplicates,return=minimal" },
+      body: JSON.stringify({ id: POOL, data, updated_at: new Date().toISOString() })
+    });
+  }
+  const listBets = () => req("/rest/v1/bets?pool=eq." + POOL + "&select=id,name,team,amount,device,created_at&order=created_at.desc&limit=1000", { headers: { Accept: "application/json" } });
+  const addBet = row => req("/rest/v1/bets", { method: "POST", headers: { "Content-Type": "application/json", Prefer: "return=representation" }, body: JSON.stringify(Object.assign({ pool: POOL }, row)) });
+  async function deleteBet(id) { await ensureFresh(); return req("/rest/v1/bets?id=eq." + id, { method: "DELETE" }); }
+  // Parimutuel math. Winners split the whole pool in proportion to their stake; if nobody backed the winner, everyone is refunded.
+  function pari(bets) {
+    const t = { a: 0, b: 0, na: 0, nb: 0 };
+    (bets || []).forEach(x => { if (x.team === "a") { t.a += x.amount; t.na++; } else if (x.team === "b") { t.b += x.amount; t.nb++; } });
+    t.total = t.a + t.b;
+    t.oddsA = t.a ? t.total / t.a : null; t.oddsB = t.b ? t.total / t.b : null; // "pays X for 1"
+    t.payout = (bet, winner) => { const side = t[winner] || 0; if (bet.team !== winner) return 0; return side ? bet.amount * t.total / side : bet.amount; };
+    return t;
+  }
+
   // ---- photos ----
   const listPhotos = () => req("/rest/v1/photos?select=id,path,thumb,caption,uploader,created_at,w,h&order=created_at.desc&limit=500", { headers: { Accept: "application/json" } });
   const publicUrl = p => cfg.url + "/storage/v1/object/public/gallery/" + p;
@@ -81,5 +107,5 @@ window.Backend = (function () {
     await req("/rest/v1/photos?id=eq." + row.id, { method: "DELETE" });
   }
 
-  return { ready, cfg, signIn, signOut, ensureFresh, user, getTournament, saveTournament, listPhotos, publicUrl, uploadBlob, addPhoto, deletePhoto };
+  return { ready, cfg, signIn, signOut, ensureFresh, user, getTournament, saveTournament, getPool, savePool, listBets, addBet, deleteBet, pari, listPhotos, publicUrl, uploadBlob, addPhoto, deletePhoto };
 })();

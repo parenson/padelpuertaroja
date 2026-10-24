@@ -58,6 +58,42 @@ create policy "photos anyone adds" on public.photos for insert with check (
 drop policy if exists "photos admin delete" on public.photos;
 create policy "photos admin delete" on public.photos for delete to authenticated using (public.is_admin());
 
+-- ---------- pro showcase betting pool ----------
+-- Pool settings (teams, open / closed / settled, winner, bet limits) live in tournament row 2, edited on admin.html.
+-- Bets are rows in the bets table. Anyone can add a bet while the pool is open; only organizers can remove one.
+insert into public.tournament (id, data) values (2, '{"title":"Pro Showcase","teamA":"Gio Carillo & Neil Scantlebury","teamB":"Alvaro Pecos & Eduardo Villaseñor","status":"open","winner":null,"min":5,"max":500}'::jsonb)
+on conflict (id) do nothing;
+
+create table if not exists public.bets (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  pool int not null default 2,
+  name text not null,
+  team text not null check (team in ('a', 'b')),
+  amount int not null check (amount >= 1 and amount <= 10000),
+  device text not null default ''
+);
+alter table public.bets enable row level security;
+
+-- true while the pool is open and the amount is within the organizer's limits
+create or replace function public.bet_allowed(p int, amt int) returns boolean
+language sql stable security definer set search_path = public as $$
+  select exists (
+    select 1 from public.tournament
+    where id = p and data ->> 'status' = 'open'
+      and amt >= coalesce((data ->> 'min')::int, 1) and amt <= coalesce((data ->> 'max')::int, 10000)
+  );
+$$;
+
+drop policy if exists "bets read" on public.bets;
+create policy "bets read" on public.bets for select using (true);
+drop policy if exists "bets anyone adds" on public.bets;
+create policy "bets anyone adds" on public.bets for insert with check (
+  char_length(name) between 1 and 40 and char_length(device) <= 40 and public.bet_allowed(pool, amount)
+);
+drop policy if exists "bets admin delete" on public.bets;
+create policy "bets admin delete" on public.bets for delete to authenticated using (public.is_admin());
+
 -- ---------- storage bucket for photos ----------
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values ('gallery', 'gallery', true, 6291456, array['image/jpeg', 'image/png', 'image/webp'])

@@ -70,6 +70,26 @@
     </div>
 
     <section class="card">
+      <h2>Pro Showcase betting pool</h2>
+      <p class="hint">Parimutuel: every bet goes into one pot and the winners split it in proportion to their stake. Open the pool to take bets, close it when the match starts, then pick the winner and settle. Cash changes hands in person.</p>
+      <div class="row">
+        <label>Team A<input type="text" id="pool-a" maxlength="60" placeholder="e.g. Carillo & Scantlebury"></label>
+        <label>Team B<input type="text" id="pool-b" maxlength="60" placeholder="e.g. Pecos & Villaseñor"></label>
+      </div>
+      <div class="row">
+        <label>Status<select id="pool-status"><option value="open">Open, taking bets</option><option value="closed">Closed, match on</option><option value="settled">Settled, winner called</option></select></label>
+        <label>Winner<select id="pool-winner"><option value="">—</option><option value="a">Team A</option><option value="b">Team B</option></select></label>
+        <label>Min bet $<input type="number" id="pool-min" min="1" max="10000" inputmode="numeric"></label>
+        <label>Max bet $<input type="number" id="pool-max" min="1" max="10000" inputmode="numeric"></label>
+        <button class="btn" id="pool-save">Save pool</button>
+      </div>
+      <div class="status" id="pool-status-line"></div>
+      <div id="pool-summary"></div>
+      <h3>Bets</h3>
+      <div class="list" id="pool-bets"></div>
+    </section>
+
+    <section class="card">
       <h2>Gallery moderation</h2>
       <p class="hint">Tap Remove under a photo to delete it from the gallery.</p>
       <div class="photos" id="photos"></div>
