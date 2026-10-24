@@ -182,7 +182,7 @@
       renderAll();
       st.textContent = row && row.data && row.data.teams ? "Last published " + new Date(row.updated_at).toLocaleString() : "Nothing published yet.";
     } catch (e) { st.className = "status err"; st.textContent = "Could not load: " + e.message; }
-    loadPhotos();
+    loadPool(); loadPhotos();
   }
   $("#save").addEventListener("click", async () => {
     S.note = $("#tnote").value.trim();
@@ -192,6 +192,55 @@
   });
   $("#reload").addEventListener("click", load);
 
+  // ---------- showcase betting pool ----------
+  let PL = { title: "Pro Showcase", teamA: "", teamB: "", status: "open", winner: null, min: 5, max: 500 }, BETS = [];
+  const money = n => "$" + (Math.round(n * 100) / 100).toLocaleString("en-US", { maximumFractionDigits: 2 });
+  const poolTeam = s => s === "a" ? (PL.teamA || "Team A") : (PL.teamB || "Team B");
+  function renderPool() {
+    $("#pool-a").value = PL.teamA || ""; $("#pool-b").value = PL.teamB || "";
+    $("#pool-status").value = PL.status || "open"; $("#pool-winner").value = PL.winner || "";
+    $("#pool-min").value = PL.min || ""; $("#pool-max").value = PL.max || "";
+    $("#pool-winner").options[1].text = "A · " + poolTeam("a"); $("#pool-winner").options[2].text = "B · " + poolTeam("b");
+    const t = B.pari(BETS), s = $("#pool-summary");
+    const line = (side, tot, n, odds) => `<tr><td>${esc(poolTeam(side))}</td><td class="n">${n}</td><td class="n">${money(tot)}</td><td class="n">${odds ? odds.toFixed(2) + " for 1" : "—"}</td></tr>`;
+    s.innerHTML = `<table><thead><tr><th>Team</th><th class="n">Bets</th><th class="n">Money</th><th class="n">Pays</th></tr></thead><tbody>${line("a", t.a, t.na, t.oddsA)}${line("b", t.b, t.nb, t.oddsB)}<tr><td><strong>Pot</strong></td><td class="n">${t.na + t.nb}</td><td class="n"><strong>${money(t.total)}</strong></td><td></td></tr></tbody></table>`
+      + (PL.status === "settled" && PL.winner ? `<p style="margin-top:8px">🏆 <strong>${esc(poolTeam(PL.winner))}</strong> won. ${BETS.some(x => x.team === PL.winner) ? "Winning bets return " + ((PL.winner === "a" ? t.oddsA : t.oddsB).toFixed(2)) + " for 1. Payouts are listed below." : "Nobody backed them: refund every bet."}</p>` : "");
+    const wrap = $("#pool-bets"); wrap.innerHTML = "";
+    if (!BETS.length) { wrap.innerHTML = '<p class="hint">No bets yet.</p>'; return; }
+    BETS.forEach(x => {
+      const d = document.createElement("div"); d.className = "team";
+      const pay = PL.status === "settled" && PL.winner ? (x.team === PL.winner ? ` → returns <strong>${money(t.payout(x, PL.winner))}</strong>` : " → lost") : "";
+      d.innerHTML = `<span>${esc(x.name)} · <strong>${money(x.amount)}</strong> on ${esc(poolTeam(x.team))}${pay} <span class="hint">${new Date(x.created_at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}</span></span><span></span><button class="btn small quiet">Remove</button>`;
+      d.querySelector("button").addEventListener("click", async e => {
+        if (!confirm(`Remove ${x.name}'s ${money(x.amount)} bet?`)) return;
+        e.target.disabled = true;
+        try { await B.deleteBet(x.id); BETS = BETS.filter(y => y !== x); renderPool(); } catch (err) { e.target.disabled = false; $("#pool-status-line").textContent = "Could not remove: " + err.message; }
+      });
+      wrap.appendChild(d);
+    });
+  }
+  async function loadPool() {
+    const st = $("#pool-status-line"); st.className = "status";
+    try {
+      const [row, bets] = await Promise.all([B.getPool(), B.listBets()]);
+      if (row && row.data && row.data.status) PL = Object.assign(PL, row.data);
+      BETS = bets || []; renderPool();
+      st.textContent = row && row.data && row.data.status ? "" : "No pool saved yet. Fill in the teams and tap Save pool.";
+    } catch (e) {
+      st.className = "status err";
+      st.textContent = /bets|relation|schema cache/i.test(e.message) ? "The betting table isn't set up yet. Run supabase-setup.sql in the Supabase SQL Editor, then Reload." : "Could not load the pool: " + e.message;
+    }
+  }
+  $("#pool-save").addEventListener("click", async () => {
+    const st = $("#pool-status-line"); st.className = "status";
+    PL.teamA = $("#pool-a").value.trim(); PL.teamB = $("#pool-b").value.trim();
+    PL.status = $("#pool-status").value; PL.winner = $("#pool-winner").value || null;
+    PL.min = Math.max(1, +$("#pool-min").value || 1); PL.max = Math.max(PL.min, +$("#pool-max").value || 10000);
+    if (PL.status === "settled" && !PL.winner) { st.className = "status err"; st.textContent = "Pick the winner before settling."; return; }
+    st.textContent = "Saving…";
+    try { await B.savePool(PL); renderPool(); st.className = "status ok"; st.textContent = "Saved " + new Date().toLocaleTimeString() + ". The Odds tab updates within a minute."; }
+    catch (e) { st.className = "status err"; st.textContent = "Not saved: " + e.message; }
+  });
   // ---------- photos ----------
   async function loadPhotos() {
     const wrap = $("#photos"), st = $("#photo-status");

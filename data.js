@@ -18,6 +18,13 @@ window.PPR = {
     photoDrop: ""           // paste a shared album link here
   },
 
+  // Shown on the Odds tab. Teams, open/closed, and the winner are set on admin.html, not here.
+  betting: {
+    title: "Showcase Odds",
+    blurb: "Parimutuel pool on the Pro Showcase. Every bet goes into one pot. The odds move with the money, and the winners split the whole pot in proportion to what they put in.",
+    settle: "Bets are tracked here and settled in cash with Paul after the match."
+  },
+
   // Shown on the Bracket tab, above the draw. One line per bullet.
   tournament: {
     title: "La Víbora Cup · How it works",

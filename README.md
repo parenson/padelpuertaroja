@@ -38,6 +38,14 @@ Photos and the tournament bracket live in a free Supabase project, not in this r
 - **Format:** two pools, then a championship bracket (semifinals, final, 3rd place match) for the top two in each pool and a consolation bracket (semifinals, final) for the rest. Once every pool match has a score the admin page fills the semifinals from the standings and the later rounds from results; any team can be changed by hand. The "How it works" text on the Bracket tab comes from `tournament` in `data.js`.
 - **Setup once:** run `supabase-setup.sql` in the SQL Editor, add each organizer under Authentication → Users (email + password) and make sure their email is in the `admins` table, then put the project URL and publishable key in `config.js`.
 
+## Odds (Pro Showcase betting pool)
+
+A parimutuel pool: every bet goes into one pot, the odds are simply pot ÷ money on that team, and winners split the whole pot in proportion to their stake. The app only keeps score; cash is settled in person.
+
+- **Guests** open the Odds tab, type their name, pick a team and an amount, and tap Place bet. Bets are final. Their own bets are marked and show what they would return.
+- **Organizers** set the two teams, the min and max bet, and the status (open, closed, settled) in the "Pro Showcase betting pool" section of `admin.html`, and can remove a bet. Settling with a winner posts the payout list on the Odds tab and the Home card.
+- **Backend:** pool settings live in `tournament` row 2; bets live in the `bets` table. The database refuses bets while the pool is closed or outside the limits. Both are created by `supabase-setup.sql` (re-run it once to add them). The tab's wording comes from `betting` in `data.js`.
+
 ## Preview locally
 
 ```bash
