@@ -75,7 +75,7 @@ create table if not exists public.bets (
 );
 alter table public.bets enable row level security;
 
--- true while the pool is open and the amount is within the organizer's limits
+-- true while the pool is open and the amount is within the organizer's limits (no max set = up to the 10,000 table cap)
 create or replace function public.bet_allowed(p int, amt int) returns boolean
 language sql stable security definer set search_path = public as $$
   select exists (

@@ -775,14 +775,15 @@
     // place a bet
     if (open) {
       const f = el("div", "card betform");
-      const chips = [20, 50, 100, 200].filter(v => v >= (PL.min || 1) && v <= (PL.max || 10000));
+      const min = PL.min || 1, max = PL.max || 0; // max 0 means no maximum
+      const chips = (min >= 20 ? [1, 2, 5, 10].map(k => k * min) : [20, 50, 100, 200]).filter(v => v >= min && (!max || v <= max));
       if (!betAmt && chips.length) betAmt = chips[0];
       f.innerHTML = `<h3 class="t">Place a bet</h3>
         <input type="text" id="bet-name" placeholder="Your name" maxlength="40" aria-label="Your name" autocomplete="name">
         <div class="pick"><button type="button" data-team="a">${esc(PL.teamA || "Team A")}</button><button type="button" data-team="b">${esc(PL.teamB || "Team B")}</button></div>
-        <div class="chips">${chips.map(v => `<button type="button" data-amt="${v}">$${v}</button>`).join("")}<label class="custom">$<input type="number" id="bet-custom" inputmode="numeric" min="${PL.min || 1}" max="${PL.max || 10000}" placeholder="other" aria-label="Other amount"></label></div>
+        <div class="chips">${chips.map(v => `<button type="button" data-amt="${v}">$${v}</button>`).join("")}<label class="custom">$<input type="number" id="bet-custom" inputmode="numeric" min="${min}" ${max ? `max="${max}"` : ""} placeholder="other" aria-label="Other amount"></label></div>
         <button class="btn" id="bet-go" type="button">Place bet</button>
-        <div class="status" id="bet-status">${PL.min || PL.max ? `Bets from ${money(PL.min || 1)} to ${money(PL.max || 10000)}. ` : ""}${cfg.settle ? esc(cfg.settle) : ""}</div>`;
+        <div class="status" id="bet-status">${max ? `Bets from ${money(min)} to ${money(max)}. ` : min > 1 ? `Minimum bet ${money(min)}. ` : ""}${cfg.settle ? esc(cfg.settle) : ""}</div>`;
       try { f.querySelector("#bet-name").value = localStorage.getItem("ppr_name") || ""; } catch (e) {}
       const paint = () => {
         f.querySelectorAll(".pick button").forEach(b => b.setAttribute("aria-pressed", b.dataset.team === betPick));
@@ -816,7 +817,7 @@
     const name = f.querySelector("#bet-name").value.trim(), st = f.querySelector("#bet-status"), go = f.querySelector("#bet-go");
     if (!name) { st.textContent = "Add your name first."; f.querySelector("#bet-name").focus(); return; }
     if (!betPick || !betAmt) return;
-    if (betAmt < (PL.min || 1) || betAmt > (PL.max || 10000)) { st.textContent = `Bets are ${money(PL.min || 1)} to ${money(PL.max || 10000)}.`; return; }
+    if (betAmt < (PL.min || 1) || (PL.max && betAmt > PL.max)) { st.textContent = PL.max ? `Bets are ${money(PL.min || 1)} to ${money(PL.max)}.` : `Minimum bet is ${money(PL.min || 1)}.`; return; }
     try { localStorage.setItem("ppr_name", name); } catch (e) {}
     go.disabled = true; st.textContent = "Placing your bet…";
     try {

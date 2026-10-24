@@ -80,7 +80,7 @@
         <label>Status<select id="pool-status"><option value="open">Open, taking bets</option><option value="closed">Closed, match on</option><option value="settled">Settled, winner called</option></select></label>
         <label>Winner<select id="pool-winner"><option value="">—</option><option value="a">Team A</option><option value="b">Team B</option></select></label>
         <label>Min bet $<input type="number" id="pool-min" min="1" max="10000" inputmode="numeric"></label>
-        <label>Max bet $<input type="number" id="pool-max" min="1" max="10000" inputmode="numeric"></label>
+        <label>Max bet $ (blank = none)<input type="number" id="pool-max" min="1" max="10000" inputmode="numeric" placeholder="none"></label>
         <button class="btn" id="pool-save">Save pool</button>
       </div>
       <div class="status" id="pool-status-line"></div>
