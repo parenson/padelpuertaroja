@@ -704,7 +704,7 @@
         ${ms.length ? `<div class="ms">${ms.map(m => { const done = m.sa != null && m.sb != null; return `<div class="m"><span class="${done && m.sa > m.sb ? "w" : ""}">${esc(tname(m.a))}</span><b>${done ? `${m.sa} – ${m.sb}` : "vs"}</b><span class="${done && m.sb > m.sa ? "w" : ""}">${esc(tname(m.b))}</span></div>`; }).join("")}</div>` : ""}`;
       body.appendChild(c);
     });
-    const ko = T.ko || {}, semis = ko.semis || [], f = ko.final || {}, third = ko.third || {}, csemis = ko.csemis || [], cf = ko.cfinal || {};
+    const ko = T.ko || {}, semis = ko.semis || [], f = ko.final || {}, third = ko.third || {}, csemis = ko.csemis || [], cf = ko.cfinal || {}, cth = ko.cthird || {};
     const has = m => m && (m.a || m.b);
     const loser = m => { const w = winner(m); return w ? (w === m.a ? m.b : m.a) : null; };
     const round = (title, list) => { // list of [label, match]; renders a card if any match has a team
@@ -716,14 +716,14 @@
         g.appendChild(d); });
       c.appendChild(g); body.appendChild(c);
     };
-    round("Championship", [["Semifinal 1", semis[0]], ["Semifinal 2", semis[1]], ["Final", f], ["3rd place match", third]]);
+    round("Championship", [["Semifinal 1", semis[0]], ["Semifinal 2", semis[1]], ["Final", f], ["3rd place match · first to 4 games", third]]);
     const ch = winner(f);
     if (ch) {
       const d = el("div", "champ");
       const extra = [`Runners-up · ${esc(tname(loser(f)))}`, winner(third) ? `3rd place · ${esc(tname(winner(third)))}` : ""].filter(Boolean).join("<br>");
       d.innerHTML = `<small>La Víbora Cup champions</small>🏆 ${esc(tname(ch))}<div class="sub">${extra}</div>`; body.appendChild(d);
     }
-    round("Consolation bracket", [["Consolation semifinal 1", csemis[0]], ["Consolation semifinal 2", csemis[1]], ["Consolation final", cf]]);
+    round("Consolation bracket", [["Consolation semifinal 1", csemis[0]], ["Consolation semifinal 2", csemis[1]], ["Consolation final", cf], ["Consolation 3rd place · first to 4 games", cth]]);
     const cw = winner(cf);
     if (cw) { const d = el("div", "champ cons"); d.innerHTML = `<small>Consolation winners</small>${esc(tname(cw))}`; body.appendChild(d); }
   }
