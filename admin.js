@@ -214,6 +214,7 @@
     const line = (side, tot, n, odds) => `<tr><td>${esc(poolTeam(side))}</td><td class="n">${n}</td><td class="n">${money(tot)}</td><td class="n">${odds ? odds.toFixed(2) + " for 1" : "—"}</td></tr>`;
     s.innerHTML = `<table><thead><tr><th>Team</th><th class="n">Bets</th><th class="n">Money</th><th class="n">Pays</th></tr></thead><tbody>${line("a", t.a, t.na, t.oddsA)}${line("b", t.b, t.nb, t.oddsB)}<tr><td><strong>Pot</strong></td><td class="n">${t.na + t.nb}</td><td class="n"><strong>${money(t.total)}</strong></td><td></td></tr></tbody></table>`
       + (PL.status === "settled" && PL.winner ? `<p style="margin-top:8px">🏆 <strong>${esc(poolTeam(PL.winner))}</strong> won. ${BETS.some(x => x.team === PL.winner) ? "Winning bets return " + ((PL.winner === "a" ? t.oddsA : t.oddsB).toFixed(2)) + " for 1. Payouts are listed below." : "Nobody backed them: refund every bet."}</p>` : "");
+    renderSettle();
     const wrap = $("#pool-bets"); wrap.innerHTML = "";
     if (!BETS.length) { wrap.innerHTML = '<p class="hint">No bets yet.</p>'; return; }
     BETS.forEach(x => {
@@ -228,6 +229,34 @@
       wrap.appendChild(d);
     });
   }
+  // Who owes what: one line per person, bets added up, net of what they staked. Uses the winner picked in the box, so it previews before you settle.
+  function settleRows(w) {
+    const t = B.pari(BETS), by = {};
+    BETS.forEach(x => { const k = x.name.trim().toLowerCase(); const p = by[k] || (by[k] = { name: x.name.trim(), staked: 0, returns: 0, n: 0 }); p.staked += x.amount; p.returns += t.payout(x, w); p.n++; });
+    return Object.values(by).map(p => Object.assign(p, { net: p.returns - p.staked }));
+  }
+  function renderSettle() {
+    const box = $("#pool-settle"), w = $("#pool-winner").value || PL.winner;
+    if (!w || !BETS.length) { box.innerHTML = ""; return; }
+    const rows = settleRows(w), owe = rows.filter(p => p.net < 0).sort((a, b) => a.net - b.net), paid = rows.filter(p => p.net > 0).sort((a, b) => b.net - a.net), even = rows.filter(p => p.net === 0);
+    const sum = (list, k) => list.reduce((s, p) => s + Math.abs(p[k]), 0);
+    const tbl = (title, list, label) => list.length ? `<h3 style="margin-top:12px">${title}</h3><table><thead><tr><th>Name</th><th class="n">Staked</th><th class="n">Returns</th><th class="n">${label}</th></tr></thead><tbody>${list.map(p => `<tr><td>${esc(p.name)}${p.n > 1 ? ` <span class="hint">(${p.n} bets)</span>` : ""}</td><td class="n">${money(p.staked)}</td><td class="n">${money(p.returns)}</td><td class="n"><strong>${money(Math.abs(p.net))}</strong></td></tr>`).join("")}<tr><td><strong>Total</strong></td><td class="n">${money(sum(list, "staked"))}</td><td class="n">${money(sum(list, "returns"))}</td><td class="n"><strong>${money(sum(list, "net"))}</strong></td></tr></tbody></table>` : "";
+    const preview = PL.status !== "settled" || PL.winner !== w;
+    box.innerHTML = `<div style="margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:10px">
+      <h3>Who owes what${preview ? ` <span class="hint">· preview if ${esc(poolTeam(w))} win</span>` : ""}</h3>
+      <p class="hint" style="margin-top:4px">Net assumes nobody has paid yet. If you collected stakes up front, pay each winner the Returns column instead.</p>
+      ${tbl("They pay you", owe, "Owes")}${tbl("You pay them", paid, "Gets")}${even.length ? `<p class="hint" style="margin-top:8px">Break even: ${even.map(p => esc(p.name)).join(", ")}</p>` : ""}
+      <div class="row" style="margin-top:10px"><button class="btn small ghost" id="settle-copy">Copy as text</button><span class="status" id="settle-copied"></span></div>
+    </div>`;
+    $("#settle-copy").addEventListener("click", async () => {
+      const txt = [`${PL.title || "Pro Showcase"} pool · ${poolTeam(w)} won · pot ${money(B.pari(BETS).total)}`, "",
+        ...(owe.length ? ["OWE (pay Paul):", ...owe.map(p => `${p.name}: ${money(-p.net)}`), ""] : []),
+        ...(paid.length ? ["GET (Paul pays):", ...paid.map(p => `${p.name}: ${money(p.net)}`)] : [])].join("\n");
+      try { await navigator.clipboard.writeText(txt); $("#settle-copied").textContent = "Copied. Paste it into WhatsApp."; } catch (e) { $("#settle-copied").textContent = "Copy failed, select the table instead."; }
+    });
+  }
+  $("#pool-winner").addEventListener("change", renderSettle);
+
   async function loadPool() {
     const st = $("#pool-status-line"); st.className = "status";
     try {
