@@ -31,6 +31,9 @@ window.PPR = {
     format: [
       "Teams and the bracket are set by the pros at the Saturday night dinner.",
       "2 pools of 4 teams. Each team plays a set against the other 3 teams in their pool.",
+      "Matches in pool play are one set to 6 games. Star point is played in each game if there is a third deuce. Tiebreaker to 7 points if a set gets to 5-5.",
+      "Pros only get one serve when serving to Joes.",
+      "Final pool results will be determined by win/loss record within the pool. If multiple teams are tied, the tiebreaker will be head to head match, and then total games won. If there is still a tie, a 3 point tiebreaker will be played to break the tie.",
       "The top two teams in each pool advance to the semifinals. Semifinal winners play in the final, the losers play for 3rd place.",
       "The 4 teams who do not make the semifinals move to a consolation bracket with its own semifinals and final."
     ]

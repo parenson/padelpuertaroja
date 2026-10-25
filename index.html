@@ -674,7 +674,16 @@
       a.GF += m.sa; a.GA += m.sb; b.GF += m.sb; b.GA += m.sa;
       if (m.sa > m.sb) { a.W++; b.L++; } else if (m.sb > m.sa) { b.W++; a.L++; }
     });
-    return rows.sort((x, y) => y.W - x.W || (y.GF - y.GA) - (x.GF - x.GA) || y.GF - x.GF || x.name.localeCompare(y.name));
+    // Pool order: win/loss record, then head to head among the tied teams, then total games won. A remaining tie is played off on court.
+    const h2h = (x, y) => { const m = (T.matches || []).filter(m => m.pool === p).find(m => m.sa != null && m.sb != null && ((m.a === x.id && m.b === y.id) || (m.a === y.id && m.b === x.id))); if (!m) return 0; const xs = m.a === x.id ? m.sa : m.sb, ys = m.a === x.id ? m.sb : m.sa; return xs > ys ? 1 : xs < ys ? -1 : 0; };
+    rows.sort((x, y) => y.W - x.W || x.name.localeCompare(y.name));
+    const out = []; let i = 0;
+    while (i < rows.length) {
+      let j = i; while (j < rows.length && rows[j].W === rows[i].W) j++;
+      const g = rows.slice(i, j); g.forEach(r => { r.H = g.reduce((s, o) => s + (o !== r && h2h(r, o) > 0 ? 1 : 0), 0); });
+      g.sort((x, y) => y.H - x.H || y.GF - x.GF || x.name.localeCompare(y.name)); out.push(...g); i = j;
+    }
+    return out;
   }
   function renderBracket() {
     const body = $("#bracket-body"); body.innerHTML = "";
