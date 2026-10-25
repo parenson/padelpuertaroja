@@ -35,7 +35,8 @@ window.PPR = {
       "Pros only get one serve when serving to Joes.",
       "Final pool results will be determined by win/loss record within the pool. If multiple teams are tied, the tiebreaker will be head to head match, and then +/- of total games won/lost. If there is still a tie, a 3 point tiebreaker will be played to break the tie.",
       "The top two teams in each pool advance to the semifinals. Semifinal winners play in the final, the losers play for 3rd place.",
-      "The 4 teams who do not make the semifinals move to a consolation bracket with its own semifinals and final."
+      "The 4 teams who do not make the semifinals move to a consolation bracket with its own semifinals, final and 3rd place match.",
+      "3rd place matches in both brackets are first team to 4 games."
     ]
   },
 

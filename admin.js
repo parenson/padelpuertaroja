@@ -8,7 +8,7 @@
   const people = [...(D.players || []), ...(D.pros || [])].map(p => p.name);
 
   // ---------- state ----------
-  const blankKO = () => ({ semis: [{}, {}], final: {}, third: {}, csemis: [{}, {}], cfinal: {} });
+  const blankKO = () => ({ semis: [{}, {}], final: {}, third: {}, csemis: [{}, {}], cfinal: {}, cthird: {} });
   let S = { teams: [], npools: 2, matches: [], ko: blankKO(), note: "" };
   const team = id => S.teams.find(t => t.id === id);
   const tname = id => (team(id) || {}).name || "TBD";
@@ -133,6 +133,7 @@
     fill(k.final, "a", winner(k.semis[0])); fill(k.final, "b", winner(k.semis[1]));
     fill(k.third, "a", loser(k.semis[0])); fill(k.third, "b", loser(k.semis[1]));
     fill(k.cfinal, "a", winner(k.csemis[0])); fill(k.cfinal, "b", winner(k.csemis[1]));
+    fill(k.cthird, "a", loser(k.csemis[0])); fill(k.cthird, "b", loser(k.csemis[1]));
   }
   function resultLines() {
     const k = S.ko, c = winner(k.final), t = winner(k.third), cw = winner(k.cfinal);
@@ -140,13 +141,14 @@
     if (c) out.push(`🏆 <strong>Champions: ${esc(tname(c))}</strong> · Runners-up: ${esc(tname(loser(k.final)))}`);
     if (t) out.push(`🥉 3rd place: ${esc(tname(t))}`);
     if (cw) out.push(`Consolation winners: ${esc(tname(cw))}`);
+    const ct = winner(k.cthird); if (ct) out.push(`Consolation 3rd place: ${esc(tname(ct))}`);
     if (!out.length) out.push('<span class="hint">Champion appears once the final has a score.</span>');
     if (!poolPlayDone()) out.unshift('<span class="hint">Semifinal teams fill in automatically once every pool match has a score. Pick teams by hand any time.</span>');
     return out.join("<br>");
   }
   const KO_BLOCKS = () => [
-    ["Semifinal 1", S.ko.semis[0]], ["Semifinal 2", S.ko.semis[1]], ["Final", S.ko.final], ["3rd place match", S.ko.third],
-    ["Consolation semifinal 1", S.ko.csemis[0]], ["Consolation semifinal 2", S.ko.csemis[1]], ["Consolation final", S.ko.cfinal]
+    ["Semifinal 1", S.ko.semis[0]], ["Semifinal 2", S.ko.semis[1]], ["Final", S.ko.final], ["3rd place match · first to 4 games", S.ko.third],
+    ["Consolation semifinal 1", S.ko.csemis[0]], ["Consolation semifinal 2", S.ko.csemis[1]], ["Consolation final", S.ko.cfinal], ["Consolation 3rd place · first to 4 games", S.ko.cthird]
   ];
   function renderKO() {
     autoSeed();
